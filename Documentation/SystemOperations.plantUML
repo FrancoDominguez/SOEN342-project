@@ -1,9 +1,7 @@
 @startuml SystemOperations
 
 object System {
-    addSchedule(Schedule schedule)
     getAvailableOfferings()
-    addTimeSlot(TimeSlot timeSlot)
     viewAllRecords()
     createOffering(Offering offering)
     deleteAccount(Account account)
