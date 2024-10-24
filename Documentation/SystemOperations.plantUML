@@ -1,0 +1,8 @@
+@startuml
+
+object System {
+  createOffering(Offering offering)
+  deleteAccount()
+}
+
+@enduml

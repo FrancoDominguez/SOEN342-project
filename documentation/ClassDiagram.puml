@@ -4,7 +4,7 @@ title Lesson Booking System - Class Diagram
 
 class Organization {
   + string Name
-  + AddLocation(Location location)
+  + addLocation(Location location)
 }
 
 class City {
@@ -16,13 +16,13 @@ class Location {
   + int LocationId <<PK>>
   + string Name
   + string Address
-  + AddSchedule(Schedule schedule)
-  + GetAvailableOfferings()
+  + addSchedule(Schedule schedule)
+  + getAvailableOfferings()
 }
 
 class Schedule {
   + int ScheduleId <<PK>>
-  + AddTimeSlot(TimeSlot timeSlot)
+  + addTimeSlot(TimeSlot timeSlot)
 }
 
 class TimeSlot {
@@ -37,15 +37,15 @@ abstract class Account {
   + int AccountId <<PK>>
   + string Name
   + string PhoneNumber
-  + Register()
-  + Login()
+  + register()
+  + login()
 }
 
 class Instructor {
   + string Specialization
-  + RegisterAvailability()
-  + ViewOfferings()
-  + TakeOffering(Offering offering)
+  + registerAvailability()
+  + viewOfferings()
+  + takeOffering(Offering offering)
 }
 
 class Offering {
@@ -53,33 +53,33 @@ class Offering {
   + string Mode  -- 'private' or 'group'
   + string LessonType
   + bool IsAvailable
-  + AssignInstructor(Instructor instructor)
-  + MarkAsUnavailable()
+  + assignInstructor(Instructor instructor)
+  + markAsUnavailable()
 }
 
 class Client {
   + DateTime DateOfBirth
-  + MakeBooking(Offering offering)
-  + ViewBookings()
-  + CancelBooking(Booking booking)
+  + makeBooking(Offering offering)
+  + viewBookings()
+  + cancelBooking(Booking booking)
 }
 
 class Guardian {
-  + HandleBooking(Offering offering)
+  + handleBooking(Offering offering)
 }
 
 class Administrator {
   + string Name
-  + CreateOffering(Offering offering)
-  + DeleteAccount(Account account)
-  + ViewAllRecords()
+  + createOffering(Offering offering)
+  + deleteAccount(Account account)
+  + viewAllRecords()
 }
 
 
 class Booking {
   + int BookingId <<PK>>
   + DateTime BookingDate
-  + Cancel()
+  + cancel()
 }
 
 Account <|-- Instructor
