@@ -10,7 +10,7 @@ object System {
     viewOfferings()
     takeOffering(Offering offering)
     assignInstructor(Instructor instructor)
-    markAsUnavailable()
+    markAsAvailable()
     addLocation(Location location)
     'makeBooking(Offering offering)
     'viewBookings()
