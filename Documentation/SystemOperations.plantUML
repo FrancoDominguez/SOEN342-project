@@ -5,21 +5,19 @@ object System {
     getAvailableOfferings()
     addTimeSlot(TimeSlot timeSlot)
     viewAllRecords()
+    createOffering(Offering offering)
+    deleteAccount(Account account)
     register()
     login()
     registerAvailability()
     viewOfferings()
     takeOffering(Offering offering)
-    assignInstructor(Instructor instructor)
     markAsUnavailable()
-    makeBooking(Offering offering)
-    viewBookings()
-    cancelBooking(Booking booking)
-    handleBooking(Offering offering)
-    createOffering(Offering offering)
-    deleteAccount(Account account)
-    
-    'cancel()'
+    'makeBooking(Offering offering)
+    'viewBookings()
+    'cancelBooking(Booking booking)
+    'handleBooking(Offering offering)
+    'cancel()
 }
 
 @enduml
