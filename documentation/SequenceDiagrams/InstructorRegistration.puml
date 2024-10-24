@@ -1,0 +1,32 @@
+@startuml
+Actor User as User
+participant Console as Console
+participant Server as Server
+collections Accounts as Accounts
+
+group Create instructor account
+  group Create Instructor account
+    activate User
+    User -> Console ++: check "instructor" checkbox
+    Console -> Console: addInstructorInputFields()
+  end
+  User -> Console:  email, phoneNumber, specialization, firstname, lastname, password
+  User -> Console: createAccount()
+
+  Console -> Server ++: createAccount(email, phoneNumber, specialization, firstname, lastname, password)
+  Server -> Accounts ++: includes(email)
+  group email already exist
+    Accounts --> Server --: true
+    Server -[#red]-> Console: <font color=red> emailAlreadyInUseError
+  end
+    Accounts --> Server: false
+    Server --> Console: success
+
+  Server -> Account **: create(email, phoneNumber, specialization, firstname, lastname, password)
+  Server -> Accounts: push(account)
+  Server --> Console --: successfullyCreatedAccount
+
+  Console -> Console: routeTo(LoginPage)
+end
+
+@enduml

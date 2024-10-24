@@ -1,0 +1,119 @@
+@startuml
+
+title Lesson Booking System - Class Diagram
+
+class Organization {
+  + string Name
+  + AddLocation(Location location)
+}
+
+class City {
+  + int CityId <<PK>>
+  + string Name
+}
+
+class Location {
+  + int LocationId <<PK>>
+  + string Name
+  + string Address
+  + AddSchedule(Schedule schedule)
+  + GetAvailableOfferings()
+}
+
+class Schedule {
+  + int ScheduleId <<PK>>
+  + AddTimeSlot(TimeSlot timeSlot)
+}
+
+class TimeSlot {
+  + int TimeSlotId <<PK>>
+  + DateTime StartTime
+  + DateTime EndTime
+  + DateTime StartDate
+  + DateTime EndDate
+}
+
+abstract class Account {
+  + int AccountId <<PK>>
+  + string Name
+  + string PhoneNumber
+  + Register()
+  + Login()
+}
+
+class Instructor {
+  + string Specialization
+  + RegisterAvailability()
+  + ViewOfferings()
+  + TakeOffering(Offering offering)
+}
+
+class Offering {
+  + int OfferingId <<PK>>
+  + string Mode  -- 'private' or 'group'
+  + string LessonType
+  + bool IsAvailable
+  + AssignInstructor(Instructor instructor)
+  + MarkAsUnavailable()
+}
+
+class Client {
+  + DateTime DateOfBirth
+  + MakeBooking(Offering offering)
+  + ViewBookings()
+  + CancelBooking(Booking booking)
+}
+
+class Guardian {
+  + HandleBooking(Offering offering)
+}
+
+class Administrator {
+  + string Name
+  + CreateOffering(Offering offering)
+  + DeleteAccount(Account account)
+  + ViewAllRecords()
+}
+
+
+class Booking {
+  + int BookingId <<PK>>
+  + DateTime BookingDate
+  + Cancel()
+}
+
+Account <|-- Instructor
+Account <|-- Client
+Account <|-- Guardian
+
+Organization "1" --> "*" Location : owns
+
+Location "1" --> "1" Schedule : has
+
+Schedule "1" --> "*" TimeSlot : includes
+
+Location "1" --> "1" City : located\_in
+
+Instructor "*" --> "*" City : available\_in
+
+Instructor "*" --> "*" Offering : takes\_on
+
+Offering "1" --> "0..1" Instructor : assigned\_to
+
+Offering "1" --> "1" Location : occurs\_at
+
+Offering "1" --> "1" TimeSlot : scheduled\_at
+
+Client "1" --> "*" Booking : makes
+
+Booking "1" --> "1" Offering : for
+
+Client "0..1" --> "1" Guardian : has
+
+Guardian "1" --> "*" Client : acts\_for
+
+Administrator "1" --> "*" Offering : creates
+
+Administrator "1" --> "*" Account : can\_delete
+
+@enduml
