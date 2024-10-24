@@ -1,0 +1,37 @@
+@startuml TakingOffering
+Actor Instructor as Instructor
+participant Console as Console
+participant Server as Server
+collections Accounts as Accounts
+participant Account as "a: Account"
+collections Offerings as Offerings
+participant Offering as "o: Offering"
+
+group Instructor Creates Offering
+  ref over Instructor, Account: User Logs In
+  activate Instructor
+  activate Console
+  Instructor -> Console: takeOnOffering()
+  Console -> Server++: getOfferings(userID, specialization, city)
+  Server -> Offerings ++: filter(specialization)
+  Offerings --> Server --: offerings
+  Server --> Console --: offeringsInfo
+  Instructor -> Console: select(offering)
+  Instructor -> Console: TakeOn()
+  Console -> Server ++: TakeOn(userID, offeringID)
+  Server -> Accounts: find(userID)
+  Accounts --> Server: userInfo
+  Server -> Server: isInstructor(userInfo)
+  alt true
+    Server -> Offerings ++: getOffering(offeringID)
+    Offerings --> Server --: offering o
+    Server -> Offering : addInstructor(userID)
+    Server -> Offering: markAsAvailable()
+    Server -> Account : push(offeringID)
+  else false
+    Server --[#red]> Console: <font color=red> userMustBeAnInstructorError
+  end
+  Server --> Console: offeringInfo
+end
+
+@enduml
