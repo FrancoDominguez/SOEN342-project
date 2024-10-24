@@ -4,6 +4,7 @@ object System {
     addSchedule(Schedule schedule)
     getAvailableOfferings()
     addTimeSlot(TimeSlot timeSlot)
+    viewAllRecords()
     register()
     login()
     registerAvailability()
@@ -17,8 +18,8 @@ object System {
     handleBooking(Offering offering)
     createOffering(Offering offering)
     deleteAccount(Account account)
-    viewAllRecords()
-    cancel()
+    
+    'cancel()'
 }
 
 @enduml
