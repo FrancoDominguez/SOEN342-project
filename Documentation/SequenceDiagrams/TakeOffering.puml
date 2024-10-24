@@ -25,7 +25,7 @@ group Instructor Creates Offering
   alt true
     Server -> Offerings ++: getOffering(offeringID)
     Offerings --> Server --: offering o
-    Server -> Offering : addInstructor(userID)
+    Server -> Offering : assignInstructor(userID)
     Server -> Offering: markAsAvailable()
     Server -> Account : push(offeringID)
   else false
