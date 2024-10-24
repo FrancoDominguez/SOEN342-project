@@ -1,0 +1,45 @@
+@startuml
+left to right direction
+
+actor WebCustomer as WC
+actor ExistingUser as EU
+actor Instructor as INS
+actor Administrator as Admin
+
+rectangle System {
+    usecase "Create Account" as UC1
+    usecase "Make Booking" as UC2
+    usecase "View Booking" as UC3
+    usecase "View Offerings" as UC4
+    usecase "Cancel Booking" as UC5
+    usecase "Add Offerings in the System" as UC6
+    usecase "Administer Accounts" as UC7
+    usecase "Select Offerings to Teach" as UC8
+}
+
+WC --> UC1
+WC --> UC2
+WC --> UC3
+WC --> UC4
+WC --> UC5
+
+EU --> UC2
+EU --> UC3
+EU --> UC4
+EU --> UC5
+
+INS --> UC1
+INS --> UC8
+
+UC8 --> UC4
+
+Admin --> UC6
+Admin --> UC7
+Admin --> UC3
+Admin --> UC5
+
+UC2 --> UC1 : <<include>>
+UC3 --> UC2 : <<include>>
+UC5 --> UC2 : <<include>>
+
+@enduml
