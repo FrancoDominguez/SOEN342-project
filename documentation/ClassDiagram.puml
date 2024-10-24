@@ -8,25 +8,23 @@ class Organization {
 }
 
 class City {
-  + int CityId <<PK>>
+  + int cityId <<PK>>
   + string name
 }
 
 class Location {
-  + int LocationId <<PK>>
+  + int locationId <<PK>>
   + string name
   + string address
-  + addSchedule(Schedule schedule)
   + getAvailableOfferings()
 }
 
 class Schedule {
   + int scheduleId <<PK>>
-  + addTimeSlot(TimeSlot timeSlot)
 }
 
 class TimeSlot {
-  + int TimeSlotId <<PK>>
+  + int timeSlotId <<PK>>
   + DateTime startTime
   + DateTime endTime
   + DateTime startDate
