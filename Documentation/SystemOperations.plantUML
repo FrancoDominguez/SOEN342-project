@@ -12,11 +12,11 @@ object System {
     assignInstructor(Instructor instructor)
     markAsAvailable()
     addLocation(Location location)
-    'makeBooking(Offering offering)
-    'viewBookings()
-    'cancelBooking(Booking booking)
-    'handleBooking(Offering offering)
-    'cancel()
+    makeBooking(Offering offering)
+    viewBookings()
+    cancelBooking(Booking booking)
+    handleBooking(Offering offering)
+    cancel()
 }
 
 @enduml
