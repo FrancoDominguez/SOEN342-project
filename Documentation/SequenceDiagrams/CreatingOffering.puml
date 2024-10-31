@@ -2,12 +2,36 @@
 Actor Admin as Admin
 participant Console as Console
 participant Server as Server
-collections Accounts as Accounts
 participant Account as "a: Account"
+collections Locations as Locations
+participant Location as "l: Location"
 collections Offerings as Offerings
-participant Offering as "o: Offering"
 
 group Instructor Creates Offering
+  activate Console
+  ref over Admin, Account: User Logs In
+  Admin -> Console: createNewOffering()
+  Console -> Server ++: getAllLocations()
+  Server -> Locations ++: getAll()
+  Locations --> Server --: allLocations
+  Server --> Console --: allLocations
+  Admin -> Console: viewAvailableTimeSlots(locationID)
+  Console -> Server ++: viewAvailableTimeSlots(locationID)
+  Server -> Location ++: getAvailableTimeSlots()
+  Location --> Server --: availableTimeSlots
+  Server --> Console --: availableTimeSlots
+  Admin -> Console: classDetails, TimeSlot
+  Console -> Server ++: createOffering(classDetails, TimeSlot)
+  Server -> "o: Offering" **: new Offering(classDetails, TimeSlot)
+  Server -> Offerings: push(o)
+  Server --> Console: success
+  
+
+
+  
+
+
+
 end
 
 @enduml

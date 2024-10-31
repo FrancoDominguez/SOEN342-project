@@ -1,0 +1,32 @@
+@startuml TakingOffering
+
+Actor UserPerson as "User"
+participant Console as Console
+participant Server as Server
+collections Users as Accounts
+participant User as "u: User"
+
+
+
+group User Logs In
+  UserPerson -> Console: email, password
+  UserPerson -> Console: login()
+  Console -> Server: login(email, password)
+  Server -> Accounts: findUser(email)
+  alt user found
+    Accounts --> Server: u: User
+  else user DNE
+    Accounts --> Server: null
+    Server --> Console: userDoesNotExistError
+  end
+  Server -> User: getPassword()
+  User --> Server: accountPassword
+  Server -> Server: compare(password, accountPassword)
+  alt password matches
+    Server --> Console: sessionToken
+  else wrong password
+    Server --> Console: wrongPasswordError
+  end
+end
+
+@enduml

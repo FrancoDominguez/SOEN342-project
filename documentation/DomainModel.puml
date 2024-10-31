@@ -2,53 +2,18 @@
 
 title Lesson Booking System - Domain Model
 
-entity Organization {
-  + Name
-}
-
-entity City {
-  + Name
-}
-
-entity Location {
-  + Name
-  + Address
-}
-
-entity Schedule {
-}
-
-entity TimeSlot {
-}
-
-entity LessonType {
-  + Name
-}
-
-entity Specialization {
-  + Name
-}
-
-entity Account {
-  + Name
-  + PhoneNumber
-}
-
-entity Instructor
-entity Client {
-  + DateOfBirth
-}
-entity Guardian
-entity Administrator
-
-entity Offering {
-  + Mode       // 'private' or 'group'
-  + IsAvailable
-}
-
-entity Booking {
-  + BookingDate
-}
+object Organization{}
+object City{}
+object Location{}
+object Schedule
+object TimeSlot
+object Account
+object Instructor
+object Client
+object Guardian
+object Administrator
+object Offering
+object Booking
 
 Account <|-- Instructor
 Account <|-- Client
@@ -65,11 +30,7 @@ Schedule "1" --> "*" TimeSlot : includes
 
 Instructor "*" --> "*" City : available_in
 
-Instructor "*" --> "*" Specialization : has
-
 Offering "1" --> "0..1" Instructor : assigned_to
-
-Offering "1" --> "1" LessonType : is_for
 
 Offering "1" --> "1" Location : occurs_at
 
