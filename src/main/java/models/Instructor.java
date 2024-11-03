@@ -1,30 +1,38 @@
 package main.java.models;
 
+import java.util.ArrayList;
+
 public class Instructor extends Account {
-  private String accountId;
-  private String firstname;
-  private String lastname;
-  private String phoneNumber;
   private String specialization;
+  private ArrayList<Offering> offerings;
 
   public Instructor(String accountId, String firstname, String lastname, String phoneNumber, String specialization) {
     super(accountId, firstname, lastname, phoneNumber);
     this.specialization = specialization;
+    this.offerings = new ArrayList<>();
   }
 
-  public Offering[] viewOfferings() {
-    // implement viewOfferings() function
-    return null;
-  };
+  public String getSpecialization() {
+    return this.specialization;
+  }
 
-  public boolean takeOffering(Offering offering) {
-    return false;
-  };
+  public ArrayList<Offering> getOfferings() {
+    return this.offerings;
+  }
+
+  public void takeOffering(Offering offering) {
+    try {
+      offering.assignInstructor(this);
+      this.offerings.add(offering);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+  }
 
   public String toString() {
     String stringData = String.format("accountId: %s, firstname: %s, lastname: %s, phoneNumber: %s, specialization: %s",
-        accountId,
-        firstname, lastname, phoneNumber, specialization);
+        this.accountId,
+        this.firstname, this.lastname, this.phoneNumber, specialization);
     return stringData;
   }
 }
