@@ -1,20 +1,49 @@
-package main.java.models;
+package models;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class Booking {
-  private String bookingId;
-  private TimeSlot bookingDate;
-  private Client client;
+  private String id;
   private Offering offering;
+  private String mode;
+  private String lessonType;
+  private TimeSlot classTime;
+  private ArrayList<Instructor> instructors;
 
+  // constructor for new object
   public Booking(Offering offering) {
-    this.bookingId = UUID.randomUUID().toString();
-    this.bookingDate = offering.getClassTime();
+    this.id = UUID.randomUUID().toString();
+    this.offering = offering;
+    this.mode = offering.getMode();
+    this.lessonType = offering.getLessonType();
+    this.classTime = offering.getClassTime();
+    this.instructors = offering.getInstructors();
+  }
+
+  // constructor when pulling from the db
+  public Booking(String id, Offering offering) {
+    this.id = id;
+    this.mode = offering.getMode();
+    this.lessonType = offering.getLessonType();
+    this.classTime = offering.getClassTime();
+    this.instructors = offering.getInstructors();
     this.offering = offering;
   }
 
   public void cancel() {
-    // remove instances of booking in offering
+    // delete from db and remove reference from client
+  }
+
+  @Override
+  public String toString() {
+    return "Booking{" +
+        "id='" + id + '\'' +
+        ", offering=" + offering +
+        ", mode='" + mode + '\'' +
+        ", lessonType='" + lessonType + '\'' +
+        ", classTime=" + classTime +
+        ", instructors=" + instructors +
+        '}';
   }
 }

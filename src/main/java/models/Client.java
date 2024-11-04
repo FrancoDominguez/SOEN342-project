@@ -1,7 +1,7 @@
-package main.java.models;
+package models;
 
-import main.java.exceptions.CantHandleBookingForAdultException;
-import main.java.exceptions.UnderageException;
+import exceptions.CantHandleBookingForAdultException;
+import exceptions.UnderageException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;

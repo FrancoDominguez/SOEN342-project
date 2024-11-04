@@ -1,5 +1,5 @@
-package main.java.models;
+package models;
 
 public class Schedule {
-  
+
 }

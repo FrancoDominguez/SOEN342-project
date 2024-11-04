@@ -1,11 +1,11 @@
-package main.java.models;
+package models;
 
-import main.java.exceptions.InvalidInstructorException;
+import exceptions.InvalidInstructorException;
 import java.util.ArrayList;
 import java.util.UUID;
 
 public class Offering {
-  private String offeringId;
+  private String id;
   private String mode;
   private String lessonType;
   private Boolean isAvailable;
@@ -14,8 +14,37 @@ public class Offering {
   private Location location;
   private int numOfParticipants;
 
+  public TimeSlot getClassTime() {
+    return this.classTime;
+  }
+
+  public String getLessonType() {
+    return this.lessonType;
+  }
+
+  public String getMode() {
+    return this.mode;
+  }
+
+  public ArrayList<Instructor> getInstructors() {
+    return this.instructors;
+  }
+
+  // constructor for new object
   public Offering(String mode, String lessonType, Location location, TimeSlot classTime) {
-    this.offeringId = UUID.randomUUID().toString();
+    this.id = UUID.randomUUID().toString();
+    this.mode = mode;
+    this.lessonType = lessonType;
+    this.isAvailable = false;
+    this.location = location;
+    this.classTime = classTime;
+    this.instructors = new ArrayList<Instructor>();
+    this.numOfParticipants = 0;
+  }
+
+  // constructor when pulling from the db
+  public Offering(String id, String mode, String lessonType, Location location, TimeSlot classTime) {
+    this.id = UUID.randomUUID().toString();
     this.mode = mode;
     this.lessonType = lessonType;
     this.isAvailable = false;
@@ -38,12 +67,8 @@ public class Offering {
     }
   }
 
-  public TimeSlot getClassTime() {
-    return this.classTime;
-  }
-
   public String toString() {
-    return String.format("offeringId: %s, mode: %s, lessonType: %s, isAvailable: %s",
-        offeringId, mode, lessonType, isAvailable);
+    return String.format("id: %s, mode: %s, lessonType: %s, isAvailable: %s",
+        id, mode, lessonType, isAvailable);
   }
 }

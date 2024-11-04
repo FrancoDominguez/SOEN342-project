@@ -1,7 +1,6 @@
-package main.java;
-
 import java.util.Scanner;
-import main.java.models.Client;
+
+import models.Client;
 
 public class App {
   public static void main(String[] args) {
@@ -9,7 +8,6 @@ public class App {
     boolean exit = false;
 
     while (!exit) {
-      // Display menu
       System.out.println("Welcome to the booking app");
       System.out.println("1. Login");
       System.out.println("2. Register");

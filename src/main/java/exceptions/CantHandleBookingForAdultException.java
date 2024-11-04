@@ -1,4 +1,4 @@
-package main.java.exceptions;
+package exceptions;
 
 public class CantHandleBookingForAdultException extends Exception {
   public CantHandleBookingForAdultException(String message) {

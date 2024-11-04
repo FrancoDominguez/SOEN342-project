@@ -1,4 +1,4 @@
-package main.java.exceptions;
+package exceptions;
 
 public class InvalidInstructorException extends Exception {
   public InvalidInstructorException(String message) {

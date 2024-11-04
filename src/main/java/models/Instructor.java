@@ -1,14 +1,17 @@
-package main.java.models;
+package models;
 
 import java.util.ArrayList;
 
 public class Instructor extends Account {
   private String specialization;
+  private String city;
   private ArrayList<Offering> offerings;
 
-  public Instructor(String accountId, String firstname, String lastname, String phoneNumber, String specialization) {
-    super(accountId, firstname, lastname, phoneNumber);
+  public Instructor(String firstname, String lastname, String phoneNumber, String password, String specialization,
+      String city) {
+    super(firstname, lastname, phoneNumber, password);
     this.specialization = specialization;
+    this.city = city;
     this.offerings = new ArrayList<>();
   }
 
