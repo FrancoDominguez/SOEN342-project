@@ -15,3 +15,9 @@
 - UML interaction diagrams
 - UML class diagram
 - Implementation
+
+## How to run
+
+1. Install maven
+2. run `mvn package`
+3. run `java -jar target/son342project-1.0-SNAPSHOT.jar`

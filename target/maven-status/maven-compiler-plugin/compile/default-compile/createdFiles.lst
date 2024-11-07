@@ -1,16 +1,1 @@
-models\Mysqlcon.class
-exceptions\InvalidInstructorException.class
-models\Administrator.class
 App.class
-models\Client.class
-models\Booking.class
-models\Offering.class
-exceptions\UnderageException.class
-models\Schedule.class
-models\City.class
-models\Location.class
-models\Organization.class
-models\Instructor.class
-models\TimeSlot.class
-exceptions\CantHandleBookingForAdultException.class
-models\Account.class

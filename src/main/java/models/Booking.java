@@ -6,7 +6,7 @@ import java.util.UUID;
 public class Booking {
   private String id;
   private Offering offering;
-  private String mode;
+  private String privatePublic;
   private String lessonType;
   private TimeSlot classTime;
   private ArrayList<Instructor> instructors;
@@ -15,7 +15,7 @@ public class Booking {
   public Booking(Offering offering) {
     this.id = UUID.randomUUID().toString();
     this.offering = offering;
-    this.mode = offering.getMode();
+    this.privatePublic = offering.getprivatePublic();
     this.lessonType = offering.getLessonType();
     this.classTime = offering.getClassTime();
     this.instructors = offering.getInstructors();
@@ -24,7 +24,7 @@ public class Booking {
   // constructor when pulling from the db
   public Booking(String id, Offering offering) {
     this.id = id;
-    this.mode = offering.getMode();
+    this.privatePublic = offering.getprivatePublic();
     this.lessonType = offering.getLessonType();
     this.classTime = offering.getClassTime();
     this.instructors = offering.getInstructors();
@@ -40,7 +40,7 @@ public class Booking {
     return "Booking{" +
         "id='" + id + '\'' +
         ", offering=" + offering +
-        ", mode='" + mode + '\'' +
+        ", privatePublic='" + privatePublic + '\'' +
         ", lessonType='" + lessonType + '\'' +
         ", classTime=" + classTime +
         ", instructors=" + instructors +

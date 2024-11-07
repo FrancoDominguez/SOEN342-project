@@ -1,13 +1,18 @@
 import java.util.Scanner;
 
 import models.Client;
+import models.Mysqlcon;
 
 public class App {
   public static void main(String[] args) {
+    Mysqlcon mysql = new Mysqlcon();
+    mysql.connect();
     Scanner scanner = new Scanner(System.in);
     boolean exit = false;
 
     while (!exit) {
+      Mysqlcon connection = new Mysqlcon();
+
       System.out.println("Welcome to the booking app");
       System.out.println("1. Login");
       System.out.println("2. Register");

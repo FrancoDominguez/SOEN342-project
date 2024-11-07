@@ -7,15 +7,12 @@ class Organization {
   + addLocation(Location location)
 }
 
-class City {
-  + int cityId <<PK>>
-  + string name
-}
 
 class Location {
   + int locationId <<PK>>
   + string name
   + string address
+  + string city
   + getAvailableOfferings()
 }
 
@@ -43,6 +40,7 @@ abstract class Account {
 class Instructor {
   + string Specialization
   + viewOfferings()
+  + string city
   + takeOffering(Offering offering)
 }
 
@@ -86,10 +84,6 @@ Organization "1" --> "*" Location : owns
 Location "1" --> "1" Schedule : has
 
 Schedule "1" --> "*" TimeSlot : includes
-
-Location "1" --> "1" City : located\_in
-
-Instructor "*" --> "*" City : available\_in
 
 Instructor "*" -- "*" Offering : takes\_on
 

@@ -7,21 +7,24 @@ public class Mysqlcon {
   public void connect() {
     try {
       Dotenv dotenv = Dotenv.load();
-      String url = dotenv.get("AWS_MYSQL_ENDPOINT");
+      String endpoint = dotenv.get("AWS_MYSQL_ENDPOINT");
+      String port = dotenv.get("AWS_MYSQL_PORT");
+      String dbName = dotenv.get("AWS_MYSQL_DB_NAME");
+      String url = "jdbc:mysql://" + endpoint + ":" + port + "/" + dbName;
+
       String user = dotenv.get("AWS_MYSQL_USER");
       String password = dotenv.get("AWS_MYSQL_PASSWORD");
-      System.out.println("url:" + url + "\n user: " + user + "\n password: " + password);
 
-      Class.forName("com.mysql.jdbc.Driver");
+      Class.forName("com.mysql.cj.jdbc.Driver");
       Connection con = DriverManager.getConnection(
           url, user, password);
       Statement stmt = con.createStatement();
-      ResultSet rs = stmt.executeQuery("select * from emp");
-      while (rs.next())
-        System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
+      ResultSet rs = stmt.executeQuery("select * from Client");
+      System.out.println(rs);
       con.close();
     } catch (Exception e) {
       System.out.println(e);
     }
   }
 }
+

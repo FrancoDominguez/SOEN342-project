@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public class Offering {
   private String id;
-  private String mode;
+  private String privatePublic;
   private String lessonType;
   private Boolean isAvailable;
   private TimeSlot classTime;
@@ -22,8 +22,8 @@ public class Offering {
     return this.lessonType;
   }
 
-  public String getMode() {
-    return this.mode;
+  public String getprivatePublic() {
+    return this.privatePublic;
   }
 
   public ArrayList<Instructor> getInstructors() {
@@ -31,9 +31,9 @@ public class Offering {
   }
 
   // constructor for new object
-  public Offering(String mode, String lessonType, Location location, TimeSlot classTime) {
+  public Offering(String privatePublic, String lessonType, Location location, TimeSlot classTime) {
     this.id = UUID.randomUUID().toString();
-    this.mode = mode;
+    this.privatePublic = privatePublic;
     this.lessonType = lessonType;
     this.isAvailable = false;
     this.location = location;
@@ -43,9 +43,9 @@ public class Offering {
   }
 
   // constructor when pulling from the db
-  public Offering(String id, String mode, String lessonType, Location location, TimeSlot classTime) {
+  public Offering(String id, String privatePublic, String lessonType, Location location, TimeSlot classTime) {
     this.id = UUID.randomUUID().toString();
-    this.mode = mode;
+    this.privatePublic = privatePublic;
     this.lessonType = lessonType;
     this.isAvailable = false;
     this.location = location;
@@ -68,7 +68,8 @@ public class Offering {
   }
 
   public String toString() {
-    return String.format("id: %s, mode: %s, lessonType: %s, isAvailable: %s",
-        id, mode, lessonType, isAvailable);
+    return String.format(
+        "id: %s, privatePublic: %s, lessonType: %s, isAvailable: %s, classTime: %s, location: %s, numOfParticipants: %d, instructors: %s",
+        id, privatePublic, lessonType, isAvailable, classTime, location, numOfParticipants, instructors);
   }
 }
