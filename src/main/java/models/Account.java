@@ -23,16 +23,27 @@ public abstract class Account {
   public void register() {
     // this will add the new account object to the list of accounts
     // whether that list is in the db or elsewhere
+
+        //Possible implementation where registeredAccounts would be in the DB
+        // Check if the account is already registered
+        
+        /*for (Account account : registeredAccounts) {
+          if (account.phoneNumber.equals(this.phoneNumber)) {
+            System.out.println("Account with this phone number already exists.");
+            return;
+          }
+        }
+        
+        // Add the new account to the list
+        registeredAccounts.add(this);
+        System.out.println("Account registered successfully.");
+      */
   };
 
   public void login() {
   }
 
   public boolean isPasswordCorrect(String password) {
-    if (this.password.equals(password)) {
-      return true;
-    } else {
-      return false;
-    }
-  };
+    return (this.password.equals(password));
+  }
 }
