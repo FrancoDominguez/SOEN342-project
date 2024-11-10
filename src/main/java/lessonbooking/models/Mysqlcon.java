@@ -1,4 +1,4 @@
-package models;
+package lessonbooking.models;
 
 import java.sql.*;
 import io.github.cdimascio.dotenv.Dotenv;
@@ -27,4 +27,3 @@ public class Mysqlcon {
     }
   }
 }
-
