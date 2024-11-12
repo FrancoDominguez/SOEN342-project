@@ -14,7 +14,7 @@ public abstract class Account {
   protected String phoneNumber;
   protected String password;
   protected LocalDate dateOfBirth;
-  protected ArrayList<Booking> bookings;
+ 
 
   protected Account(String firstname, String lastname, String phoneNumber, String password, LocalDate dateofBirthInput) {
     this.firstname = firstname;
@@ -22,10 +22,12 @@ public abstract class Account {
     this.phoneNumber = phoneNumber;
     this.password = password;
     this.dateOfBirth = dateofBirthInput;
-    this.bookings = new ArrayList<Booking>();
   }
 
-  public void register() {
+/*   
+    CREATED A SEPERATE REGISTER() FOR CLIENTS AND INSTRUCTORS    
+
+    public void register() {
     Mysqlcon con = new Mysqlcon();
     Statement stmt = null;
 
@@ -63,7 +65,7 @@ public abstract class Account {
     }
 
   }
-
+*/
 
   public boolean isRegistered(int id){
      return (this.id == id);

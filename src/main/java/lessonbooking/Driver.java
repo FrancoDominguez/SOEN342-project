@@ -130,14 +130,24 @@ public class Driver {
    
     if (acc_type == 1){
       Client newClientAccount = new Client(firstname, lastname, phoneNumber, password, dateOfBirth);
+      newClientAccount.register();
     }
 
     if (acc_type == 2) {
-      Instructor newInstructorAccount = new Instructor(firstname, lastname, phoneNumber, password, dateOfBirthInput, dateOfBirthInput);
+      System.out.print("Please enter your specialization: ");
+      String specialization = scanner.nextLine();
+
+      //System.out.print("Please enter your city(): ");
+      //String cities = scanner.nextLine();
+      
+
+      //REMEMBER TO ADD CITIES AFTER
+      Instructor newInstructorAccount = new Instructor(firstname, lastname, phoneNumber, password, dateOfBirth, specialization);
+      newInstructorAccount.register();
     }
 
     
-    newClientAccount.register();
+    
     
   }
 
