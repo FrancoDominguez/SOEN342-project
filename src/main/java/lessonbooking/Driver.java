@@ -1,5 +1,6 @@
 package lessonbooking;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -7,6 +8,7 @@ import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 import lessonbooking.models.Client;
+import lessonbooking.models.Instructor;
 import lessonbooking.services.Mysqlcon;
 
 public class Driver {
@@ -54,8 +56,52 @@ public class Driver {
 
   public static void login() {
     // Implement login functionality here
-    System.out.println("Login functionality goes here.");
+    //System.out.println("Login functionality goes here.");
+    
+    Scanner scanner = new Scanner(System.in);
+    
+    System.out.print("Enter phone number: ");
+    String phoneNumber = scanner.nextLine();  // Assuming phone number is the unique identifier
+    
+    System.out.print("Enter password: ");
+    String password = scanner.nextLine();
+
+    // Create a MySQL connection to check if the user exists and if the password matches
+    Mysqlcon mysql = new Mysqlcon();
+    try {
+        mysql.connect();
+        
+        // Query to check if the user with the provided phone number exists
+        String query = "SELECT * FROM clients WHERE phone_number = ? AND password = ?";
+        
+        // Use a prepared statement to prevent SQL injection
+        PreparedStatement pstmt = mysql.getConnection().prepareStatement(query);
+        pstmt.setString(1, phoneNumber);
+        pstmt.setString(2, password);
+        
+        // Execute the query
+        ResultSet rs = pstmt.executeQuery();
+
+        // Check if the result set contains any rows (user exists and password matches)
+        if (rs.next()) {
+            System.out.println("Login successful!");
+            // You can add further logic here like creating a session, etc.
+        } else {
+            System.out.println("Invalid phone number or password. Please try again.");
+        }
+
+    } catch (Exception e) {
+        System.out.println("Error during login: " + e.getMessage());
+    } finally {
+        try {
+            mysql.close();
+        } catch (Exception e) {
+            System.out.println("Error closing connection: " + e.getMessage());
+        }
+    }
   }
+
+  
 
   public static void createAccount(Scanner scanner) {
     scanner.nextLine();
@@ -68,7 +114,7 @@ public class Driver {
     System.out.print("Enter password: ");
     String password = scanner.nextLine();
     System.out.print("Enter date of birth (yyyy-MM-dd): ");
-    String dateOfBirthInput = scanner.nextLine();
+    String dateOfBirthInput = scanner.nextLine(); 
 
     LocalDate dateOfBirth = null;
         try {
@@ -76,11 +122,19 @@ public class Driver {
             dateOfBirth = LocalDate.parse(dateOfBirthInput, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         } catch (DateTimeParseException e) {
             System.out.println("Invalid date format. Please enter the date in yyyy-MM-dd format.");
-        }
-    
-    System.out.println("date of birth: " + dateOfBirth);  
+        } 
 
-    Client newClientAccount = new Client(firstname, lastname, phoneNumber, password, dateOfBirth);
+    System.out.print("Press 1 if you a client or Press 2 if you are an Instructor 2: ");
+    int acc_type = scanner.nextInt();
+
+   
+    if (acc_type == 1){
+      Client newClientAccount = new Client(firstname, lastname, phoneNumber, password, dateOfBirth);
+    }
+
+    if (acc_type == 2) {
+      Instructor newInstructorAccount = new Instructor(firstname, lastname, phoneNumber, password, dateOfBirthInput, dateOfBirthInput);
+    }
 
     
     newClientAccount.register();

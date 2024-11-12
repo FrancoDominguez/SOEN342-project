@@ -36,7 +36,7 @@ public abstract class Account {
       // Concatenate the query string with values directly
       String queryString = "INSERT INTO clients (id, firstname, lastname, phone_number, password, date_of_birth) VALUES ('" 
                            + this.id + "', '" + this.firstname + "', '" + this.lastname + "', '" + this.phoneNumber + "', '" + this.password + "','" + this.dateOfBirth.toString() + "')";
-      System.out.println(queryString);
+      //System.out.println(queryString); to check if query values are good
       int rowsAffected = stmt.executeUpdate(queryString);
       if (rowsAffected > 0) {
         System.out.println("Account registered successfully.");

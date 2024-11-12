@@ -1,19 +1,20 @@
 package lessonbooking.models;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Instructor extends Account {
   private String specialization;
-  private String city;
+  private ArrayList<String> city;
   private ArrayList<Offering> offerings;
 
-  public Instructor(String firstname, String lastname, String phoneNumber, String password, String specialization,
-      String city) {
-    super(firstname, lastname, phoneNumber, password);
+  public Instructor(String firstname, String lastname, String phoneNumber, String password, LocalDate dateofBirth, String specialization){
+    super(firstname, lastname, phoneNumber, password, dateOfBirth);
     this.specialization = specialization;
-    this.city = city;
-    this.offerings = new ArrayList<>();
   }
+    //this.city = city;
+    //this.offerings = new ArrayList<>();
+  
 
   public String getSpecialization() {
     return this.specialization;
