@@ -1,0 +1,66 @@
+@startuml relationalDataModel
+
+hide circle
+skinparam linetype ortho
+
+entity "Clients" as clients {
+ id: VARCHAR(128) <PK>
+ --
+ first_name: VARCHAR(128) 
+ last_name: VARCHAR(128)
+ phoneNumber: VARCHAR(64) <UNIQUE>
+ password: VARCHAR(128)
+ dateOfBirth: Date
+}
+
+entity "Instructors" as instructors {
+  id: VARCHAR(128) <PK>
+  --
+  first_name: VARCHAR(128)
+  last_name: VARCHAR(128)
+  phoneNumber: VARCHAR(64)
+  password: VARCHAR(128)
+  specialization: VARCHAR(128)
+  city: <FK> VARCHAR(128)
+}
+
+entity "Bookings" as bookings {
+  status VARCHAR(128)
+  #composite key
+  client <FK> VARCHAR(128)
+  offering <FK> VARCHAR(128)
+}
+
+entity "Offerings" as offerings {
+  id: VARCHAR(128) <PK>
+  --
+  privatePublic: VARCHAR(128)
+  lessonType: VARCHAR(128)
+  isAvailable: BOOLEAN
+  classStartTime: DateTime
+  classEndTime: DateTime
+  location: <FK> VARCHAR(128)
+  numOfParticipants: smallInt
+  maxNumOfParticipants: smallInt
+}
+
+entity "Instructors_Offerings" as instructors_offerings {
+  # composite key
+  instructor: string <PK, FK>
+  offering: string <PK, FK>
+}
+
+entity "Locations" as locations {
+  id: VARCHAR(128) <PK>
+  --
+  name: VARCHAR(128)
+  address: VARCHAR(128)
+  city: <FK> VARCHAR(128)
+}
+
+entity "Cities" as cities {
+  id: VARCHAR(128) <PK>
+  name: VARCHAR(128)
+}
+
+@enduml

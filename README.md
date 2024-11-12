@@ -15,3 +15,11 @@
 - UML interaction diagrams
 - UML class diagram
 - Implementation
+
+## How to run
+
+1. Install maven
+2. run `mvn package`
+3. run `java -jar target/lessonbooking-1.0-SNAPSHOT.jar`
+
+note: if you are on wsl, you can alias `alias runjava='mvn clean package && java -jar target/lessonbooking-1.0-SNAPSHOT.jar'`, then simply run `runjava` to compile and run the entire thing (still from the backend directory).
