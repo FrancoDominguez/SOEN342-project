@@ -1,10 +1,12 @@
-packagelessonbooking.models; 
+package lessonbooking.models; 
+
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.UUID;
 import lessonbooking.services.Mysqlcon;
 
 public abstract class Account {
-  protected String accountId;
+  protected String id;
   protected String firstname;
   protected String lastname;
   protected String phoneNumber;
@@ -12,7 +14,7 @@ public abstract class Account {
   protected ArrayList<Booking> bookings;
 
   protected Account(String firstname, String lastname, String phoneNumber, String password) {
-    this.accountId = UUID.randomUUID().toString();
+    this.id = UUID.randomUUID().toString();
     this.firstname = firstname;
     this.lastname = lastname;
     this.phoneNumber = phoneNumber;
@@ -21,28 +23,49 @@ public abstract class Account {
   }
 
   public void register() {
-    // this will add the new account object to the list of accounts
-    // whether that list is in the db or elsewhere
+    Mysqlcon con = new Mysqlcon();
+    Statement stmt = null;
 
-        //Possible implementation where registeredAccounts would be in the DB
-        // Check if the account is already registered
-        
-        /*for (Account account : registeredAccounts) {
-          if (account.phoneNumber.equals(this.phoneNumber)) {
-            System.out.println("Account with this phone number already exists.");
-            return;
-          }
-        }
-        
-        // Add the new account to the list
-        registeredAccounts.add(this);
-       */
-  };
+    try {
+      con.connect();
+      stmt = con.getConnection().createStatement();
 
-  public void login() {
+      // Concatenate the query string with values directly
+      String queryString = "INSERT INTO clients (id, first_name, last_name, phone_number, password) VALUES ('" 
+                           + id + "', '" + firstname + "', '" + lastname + "', '" + phoneNumber + "', '" + password + "')";
+
+      int rowsAffected = stmt.executeUpdate(queryString);
+      if (rowsAffected > 0) {
+        System.out.println("Account registered successfully.");
+      } else {
+        System.out.println("Registration failed.");
+      }
+
+    } 
+    
+    catch (Exception e) {
+      System.out.println("Error during registration: " + e.getMessage());
+    } 
+    
+    finally {
+      try {
+        if (stmt != null) stmt.close();
+        con.close();
+      } 
+      
+      catch (Exception e) {
+        System.out.println("Error closing resources: " + e.getMessage());
+      }
+
+    }
+
   }
 
-  public boolean isPasswordCorrect(String password) {
-    return (this.password.equals(password));
+
+  public boolean isRegistered(String id){
+     return (this.id.equals(id));
   }
+
+
+
 }

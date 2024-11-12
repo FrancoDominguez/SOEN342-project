@@ -33,8 +33,8 @@ public class Instructor extends Account {
   }
 
   public String toString() {
-    String stringData = String.format("accountId: %s, firstname: %s, lastname: %s, phoneNumber: %s, specialization: %s",
-        this.accountId,
+    String stringData = String.format("id: %s, firstname: %s, lastname: %s, phoneNumber: %s, specialization: %s",
+        this.id,
         this.firstname, this.lastname, this.phoneNumber, specialization);
     return stringData;
   }
