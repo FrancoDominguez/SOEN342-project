@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class Booking {
+  
   private String id;
   private Offering offering;
   private String privatePublic;

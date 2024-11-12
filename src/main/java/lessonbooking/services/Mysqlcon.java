@@ -34,6 +34,11 @@ public class Mysqlcon {
     this.connection.close();
   }
 
+  public Connection getConnection() {
+    return this.connection;
+  }
+
+
   public void executeQuery(String statementString) throws Exception {
     Statement statement = this.connection.createStatement();
     this.resultSet = statement.executeQuery(statementString);
@@ -52,4 +57,6 @@ public class Mysqlcon {
   public ResultSet getResultSet() {
     return this.resultSet;
   }
+
+
 }
