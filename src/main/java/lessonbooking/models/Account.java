@@ -1,24 +1,27 @@
 package lessonbooking.models; 
 
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.UUID;
 import lessonbooking.services.Mysqlcon;
 
 public abstract class Account {
-  protected String id;
+  protected int id;
   protected String firstname;
   protected String lastname;
   protected String phoneNumber;
   protected String password;
+  protected LocalDate dateOfBirth;
   protected ArrayList<Booking> bookings;
 
-  protected Account(String firstname, String lastname, String phoneNumber, String password) {
-    this.id = UUID.randomUUID().toString();
+  protected Account(String firstname, String lastname, String phoneNumber, String password, LocalDate dateofBirthInput) {
     this.firstname = firstname;
     this.lastname = lastname;
     this.phoneNumber = phoneNumber;
     this.password = password;
+    this.dateOfBirth = dateofBirthInput;
     this.bookings = new ArrayList<Booking>();
   }
 
@@ -31,9 +34,9 @@ public abstract class Account {
       stmt = con.getConnection().createStatement();
 
       // Concatenate the query string with values directly
-      String queryString = "INSERT INTO clients (id, first_name, last_name, phone_number, password) VALUES ('" 
-                           + id + "', '" + firstname + "', '" + lastname + "', '" + phoneNumber + "', '" + password + "')";
-
+      String queryString = "INSERT INTO clients (id, firstname, lastname, phone_number, password, date_of_birth) VALUES ('" 
+                           + this.id + "', '" + this.firstname + "', '" + this.lastname + "', '" + this.phoneNumber + "', '" + this.password + "','" + this.dateOfBirth.toString() + "')";
+      System.out.println(queryString);
       int rowsAffected = stmt.executeUpdate(queryString);
       if (rowsAffected > 0) {
         System.out.println("Account registered successfully.");
@@ -62,8 +65,8 @@ public abstract class Account {
   }
 
 
-  public boolean isRegistered(String id){
-     return (this.id.equals(id));
+  public boolean isRegistered(int id){
+     return (this.id == id);
   }
 
 

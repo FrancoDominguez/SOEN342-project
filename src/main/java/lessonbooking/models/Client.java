@@ -10,22 +10,15 @@ import lessonbooking.exceptions.UnderageException;
 import lessonbooking.services.Mysqlcon;
 
 public class Client extends Account {
-  private LocalDate dateOfBirth;
   private Boolean isOfAge;
 
-  public Client(String firstname, String lastname, String phoneNumber, String password,
-      String dateOfBirth) {
-    super(firstname, lastname, phoneNumber, password);
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    this.dateOfBirth = LocalDate.parse(dateOfBirth, formatter);
-
-    LocalDate now = LocalDate.now();
-    Period age = Period.between(this.dateOfBirth, now);
-    this.isOfAge = (age.getYears() > 18);
+  public Client(String firstname, String lastname, String phoneNumber, String password, LocalDate dateOfBirth) {
+    super(firstname, lastname, phoneNumber, password, dateOfBirth);
+    //System.out.println("dateofbirth in client class constructor: " + dateOfBirth);
   }
 
   public LocalDate getDateOfBirth() {
-    return this.dateOfBirth;
+    return dateOfBirth;
   }
 
   public Boolean getIsOfAge() {
