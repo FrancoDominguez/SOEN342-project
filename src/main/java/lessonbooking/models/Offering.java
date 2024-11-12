@@ -6,7 +6,7 @@ import java.util.UUID;
 import lessonbooking.exceptions.InvalidInstructorException;
 
 public class Offering {
-  private String id;
+  private int id;
   private String privatePublic;
   private String lessonType;
   private Boolean isAvailable;
@@ -33,7 +33,7 @@ public class Offering {
 
   // constructor for new object
   public Offering(String privatePublic, String lessonType, Location location, TimeSlot classTime) {
-    this.id = UUID.randomUUID().toString();
+    this.id = -1;
     this.privatePublic = privatePublic;
     this.lessonType = lessonType;
     this.isAvailable = false;
@@ -44,8 +44,8 @@ public class Offering {
   }
 
   // constructor when pulling from the db
-  public Offering(String id, String privatePublic, String lessonType, Location location, TimeSlot classTime) {
-    this.id = UUID.randomUUID().toString();
+  public Offering(int id, String privatePublic, String lessonType, Location location, TimeSlot classTime) {
+    this.id = id;
     this.privatePublic = privatePublic;
     this.lessonType = lessonType;
     this.isAvailable = false;

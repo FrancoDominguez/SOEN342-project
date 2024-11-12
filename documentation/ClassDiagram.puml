@@ -1,102 +1,100 @@
 @startuml ClassDiagram
+skinparam linetype ortho
 
 title Lesson Booking System - Class Diagram
 
 class Organization {
-  + string name
-  + addLocation(Location location)
+  - string name
+  - addLocation(Location location)
 }
 
-
 class Location {
-  + int locationId <<PK>>
-  + string name
-  + string address
-  + string city
-  + getAvailableOfferings()
+  - int locationId <<PK>>
+  - string name
+  - string address
+  - string city
+  - getAvailableOfferings()
 }
 
 class Schedule {
-  + int scheduleId <<PK>>
+  - int scheduleId <<PK>>
 }
 
 class TimeSlot {
-  + int timeSlotId <<PK>>
-  + DateTime startTime
-  + DateTime endTime
-  + DateTime startDate
-  + DateTime endDate
+  - int timeSlotId <<PK>>
+  - DateTime startTime
+  - DateTime endTime
+  - DateTime startDate
+  - DateTime endDate
 }
 
+
 abstract class Account {
-  + int accountId <<PK>>
-  + string name
-  + string phoneNumber
-  + string password
-  + register()
-  + login()
+  - int accountId <<PK>>
+  - string name
+  - string phoneNumber
+  - string password
+  - register()
+  - login()
 }
 
 class Instructor {
-  + string Specialization
-  + viewOfferings()
-  + string city
-  + takeOffering(Offering offering)
+  - string Specialization
+  - viewOfferings()
+  - string city
+  - takeOffering(Offering offering)
 }
 
 class Offering {
-  + int OfferingId <<PK>>
-  + string mode  -- 'private' or 'group'
-  + string lessonType
-  + bool isAvailable
-  + assignInstructor(Instructor instructor)
-  + markAsAvailable()
+  - int OfferingId <<PK>>
+  - string mode  -- 'private' or 'group'
+  - string lessonType
+  - bool isAvailable
+  - assignInstructor(Instructor instructor)
+  - markAsAvailable()
+  - markAsUnavailable()
 }
 
 class Client {
-  + DateTime dateOfBirth
-  + Boolean guardian
-  + handleBooking(Client client, Booking booking)
-  + makeBooking(Offering offering)
-  + viewBookings()
-  + cancelBooking(Booking booking)
+  - DateTime dateOfBirth
+  - Boolean guardian
+  - handleBooking(Client client, Booking booking)
+  - makeBooking(Offering offering)
+  - viewBookings()
+  - cancelBooking(Booking booking)
 }
 
 class Administrator {
-  + string name
-  + createOffering(Offering offering)
-  + deleteAccount(Account account)
-  + viewAllRecords()
+  - string name
+  - createOffering(Offering offering)
+  - deleteAccount(Account account)
+  - createOffering()
+  - createLocation()
+  - deleteOffering()
+  - deleteUser()
+  - getAllOfferings()
+  - getOffering()
+  - removeAttendee()
 }
 
 
 class Booking {
-  + int bookingId <<PK>>
-  + DateTime bookingDate
-  + cancel()
+  - int id <PK>
+  - getBookingInfo()
 }
 
 Account <|-- Instructor
 Account <|-- Client
 
-Organization "1" --> "*" Location : owns
-
-Location "1" --> "1" Schedule : has
-
-Schedule "1" --> "*" TimeSlot : includes
-
+Organization "1" -- "*" Location : owns
+Location "1" -- "1" Schedule : has
+Schedule "1" -- "*" TimeSlot : includes
 Instructor "*" -- "*" Offering : takes\_on
-
 Offering "*" -- "1" Location : occurs\_at
-
-Offering "1" --> "1" TimeSlot : scheduled\_at
-
-Client "1" --> "*" Booking : makes
-
+Offering "1" -- "1" TimeSlot : scheduled\_at
+Client "1" -- "*" Booking : makes
 Booking "*" -- "1" Offering : for
-
-Administrator "1" --> "*" Offering : creates
-
-Administrator "1" --> "*" Account : can\_delete
+Administrator "1" -- "*" Offering : creates
+Administrator "1" -- "*" Account : can\_delete
 
 @enduml

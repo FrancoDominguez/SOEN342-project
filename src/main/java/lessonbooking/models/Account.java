@@ -2,6 +2,7 @@ package lessonbooking.models;
 
 import java.util.ArrayList;
 import java.util.UUID;
+import lessonbooking.services.Mysqlcon;
 
 public abstract class Account {
   protected String accountId;

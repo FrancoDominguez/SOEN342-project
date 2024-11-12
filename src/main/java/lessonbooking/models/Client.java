@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import lessonbooking.exceptions.CantHandleBookingForAdultException;
 import lessonbooking.exceptions.UnderageException;
+import lessonbooking.services.Mysqlcon;
 
 public class Client extends Account {
   private LocalDate dateOfBirth;
@@ -43,7 +44,7 @@ public class Client extends Account {
     this.bookings.add(newBooking);
   }
 
-  public void handleBooking(Offering offering, Client minorClient)
+  public void makeBookingForChild(Offering offering, Client minorClient)
       throws UnderageException, CantHandleBookingForAdultException {
     if (!this.isOfAge) {
       throw new UnderageException("Underage user cannot handle a booking for someone else");
