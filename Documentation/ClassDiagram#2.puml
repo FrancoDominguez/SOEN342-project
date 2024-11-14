@@ -1,0 +1,158 @@
+@startuml ClassDiagram#2
+skinparam linetype ortho
+
+title Class Diagram (for Use Case 2)
+
+class Guest{
+  + viewLocations()
+  + viewOfferingsByLocation()
+  + viewOfferingsByLessonType()
+  + viewOfferingsByCity()
+  + viewAllOfferings()
+}
+
+
+class OrganizationsCatalogue {
+  - int id <<PK>>
+  - String name
+  - ArrayList<Location> locations
+}
+
+class LocationsCatalogue {
+  - int id <<PK>>
+  - String name
+  - String address
+  - String city
+  - int organizationid
+}
+
+class Account {
+  # int accountId <<PK>>
+  # String username
+  # String firstname
+  # String lastname
+  # String phoneNumber
+  # String password
+  # DateTime dateOfBirth
+  + isRegistered()
+  + isAdult()
+  + validatePassword()
+}
+
+class Instructor {
+  - String specialization
+  - ArrayList<Offerings> offerings
+  - ArrayList<String> city
+  + hasCity()
+  + isSpecializedIn()
+  + login()
+  + takeOffering()
+  + dropOffering()
+}
+
+class OfferingsCatalogue {
+  - int id <<PK>>
+  - String lessonType
+  - String privatePublic
+  - boolean isAvailable
+  - int maxParticipants
+  - int participants
+  - LocalDateTime startTime
+  - LocalDateTime endTime
+  - int locationId
+  - String locationName
+  - String locationAddress
+  - String locationCity
+  - int instructorId
+  - String instructorFirstname
+  - String instructorLastname
+  + addParticipant()
+  + removeParticipant()
+  + assignInstructor()
+  + dropInstructor()
+  + isFull()
+  + isEmpty()
+  + hasInstructor()
+  + isAvailable()
+}
+
+class Client {
+  + login()
+  + viewBookings()
+  + performBooking()
+  + makeBooking()
+  + makeBookingForMinor()
+  + cancelBooking()
+}
+
+class Administrator {
+  + login()
+  + createOffering()
+  + deleteOffering()
+  + deleteOfferingForce()
+  + createLocation()
+  + deleteAccount()
+  + viewOfferingBookings()
+  + deleteBooking()
+}
+
+class RegistrationService{
+  + createClient()
+  + createInstructor()
+  + createAdmin()
+}
+
+class BookingsCatalogue {
+  - int clinetDd <<PK>>
+  - int offeringId
+  - String clientUsername
+  - String clientFirstname
+  - String clientLastname
+  - String lessonType
+  - String privatePublic
+  - boolean isAvailable
+  - int maxParticipants
+  - int participants
+  - LocalDateTime startTime
+  - LocalDateTime endTime
+  - String locationName
+  - String locationAddress
+  - String instructorFirstname
+  - String instructorLastname
+  + toString()
+}
+
+class Assignment{  
+}
+
+
+class Booking { 
+}
+
+
+Account <|-- Instructor
+Account <|-- Client
+Account <|-- Administrator
+Guest <|-- Account
+
+
+Administrator "1" -- "*" OfferingsCatalogue : "CRUD"
+Administrator "1" -- "*" OrganizationsCatalogue : "CRUD"
+Administrator "1" -- "*" LocationsCatalogue : "CRUD"
+Administrator "1" -- "*" Account : "Read/Delete"
+RegistrationService "1" -- "*" Account : "Create"
+Client "1" -- "1" BookingsCatalogue: "CRUD/has"
+(Client, BookingsCatalogue) .. Booking 
+Guest "1" -- "*" LocationsCatalogue: "Read"
+Guest "1" -- "*" OfferingsCatalogue: "Read"
+Guest "1" -- "*" OrganizationsCatalogue: "Read"
+LocationsCatalogue "*" - "*" OrganizationsCatalogue: "has"
+BookingsCatalogue "*" - "*" OfferingsCatalogue: "has"
+OfferingsCatalogue "*" - "*" LocationsCatalogue: "has"
+Instructor "1" -- "1" OfferingsCatalogue: "Takes on"
+(Instructor, OfferingsCatalogue) .. Assignment
+
+
+
+
+@enduml
