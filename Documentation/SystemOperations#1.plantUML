@@ -1,0 +1,33 @@
+@startuml SystemOperations#1
+
+object System{
+
+viewLocations()
+viewOfferingsByLocation()
+viewOfferingsByLessonType()
+viewOfferingsByCity()
+viewAllOfferings()
+isRegistered()
+isAdult()
+validatePassword()
+hasCity(city: String)
+isSpecializedIn()
+login()
+takeOffering()
+dropOffering()
+addParticipant()
+removeParticipant()
+assignInstructor()
+dropInstructor()
+isFull()
+isEmpty()
+hasInstructor()
+isAvailable()
+createOffering()
+createLocation()
+deleteAccount()
+createInstructor()
+toString()
+
+}
+@enduml

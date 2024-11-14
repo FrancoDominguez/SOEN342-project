@@ -1,0 +1,118 @@
+@startuml ClassDiagram#1
+skinparam linetype ortho
+
+title Class Diagram 
+
+class Guest{
+  + viewLocations()
+  + viewOfferingsByLocation()
+  + viewOfferingsByLessonType()
+  + viewOfferingsByCity()
+  + viewAllOfferings()
+}
+
+
+class OrganizationsCatalogue {
+  - int id <<PK>>
+  - String name
+  - ArrayList<Location> locations
+}
+
+class LocationsCatalogue {
+  - int id <<PK>>
+  - String name
+  - String address
+  - String city
+  - int organizationid
+}
+
+class Account {
+  # int accountId <<PK>>
+  # String username
+  # String firstname
+  # String lastname
+  # String phoneNumber
+  # String password
+  # DateTime dateOfBirth
+  + isRegistered()
+  + isAdult()
+  + validatePassword()
+}
+
+class Instructor {
+  - String specialization
+  - ArrayList<Offerings> offerings
+  - ArrayList<String> city
+  + hasCity()
+  + isSpecializedIn()
+  + login()
+  + takeOffering()
+  + dropOffering()
+}
+
+class OfferingsCatalogue {
+  - int id <<PK>>
+  - String lessonType
+  - String privatePublic
+  - boolean isAvailable
+  - int maxParticipants
+  - int participants
+  - LocalDateTime startTime
+  - LocalDateTime endTime
+  - int locationId
+  - String locationName
+  - String locationAddress
+  - String locationCity
+  - int instructorId
+  - String instructorFirstname
+  - String instructorLastname
+  + addParticipant()
+  + removeParticipant()
+  + assignInstructor()
+  + dropInstructor()
+  + isFull()
+  + isEmpty()
+  + hasInstructor()
+  + isAvailable()
+}
+
+
+class Administrator {
+  + login()
+  + createOffering()
+  + deleteOffering()
+  + deleteOfferingForce()
+  + createLocation()
+  + deleteAccount()
+  + viewOfferingBookings()
+  + deleteBooking()
+}
+
+class RegistrationService{
+  + createInstructor()
+  + createAdmin()
+}
+
+
+
+Account <|-- Instructor
+Account <|-- Administrator
+Guest <|-- Account
+
+
+Administrator "1" -- "*" OfferingsCatalogue : "CRUD"
+Administrator "1" -- "*" OrganizationsCatalogue : "CRUD"
+Administrator "1" -- "*" LocationsCatalogue : "CRUD"
+Administrator "1" - "*" Account : "Read/Delete"
+RegistrationService "1" -- "*" Account : "Create"
+Guest "1" -- "*" LocationsCatalogue: "Read"
+Guest "1" -- "*" OfferingsCatalogue: "Read"
+Guest "1" -- "*" OrganizationsCatalogue: "Read"
+LocationsCatalogue "*" - "*" OrganizationsCatalogue: "has"
+OfferingsCatalogue "*" - "*" LocationsCatalogue: "has"
+Instructor "1" -- "1" OfferingsCatalogue: "Takes on"
+
+
+
+
+@enduml
