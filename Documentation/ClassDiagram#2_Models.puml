@@ -1,0 +1,120 @@
+@startuml ClassDiagram#2_Models
+skinparam linetype ortho
+
+title Class Diagram - Models Package (for Use Case 2)
+
+class Organization {
+  - string name
+  - addLocation(Location location)
+}
+
+class Location {
+  - int id <<PK>>
+  - String name
+  - String address
+  - String city
+  - int organizationid
+}
+
+class Schedule {
+  - int scheduleId <<PK>>
+}
+
+class TimeSlot {
+  - int timeSlotId <<PK>>
+  - DateTime startTime
+  - DateTime endTime
+  - DateTime startDate
+  - DateTime endDate
+}
+
+
+abstract class Account {
+  # int accountId <<PK>>
+  # String username
+  # String firstname
+  # String lastname
+  # String phoneNumber
+  # String password
+  # DateTime dateOfBirth
+  + isRegistered()
+  + isAdult()
+  + validatePassword()
+}
+
+class Instructor {
+  - String specialization
+  - ArrayList<Offerings> offerings
+  - ArrayList<String> city
+  + hasCity()
+  + isSpecializedIn()
+}
+
+class Offering {
+  - int id
+  - String lessonType
+  - String privatePublic
+  - boolean isAvailable
+  - int maxParticipants
+  - int participants
+  - LocalDateTime startTime
+  - LocalDateTime endTime
+  - int locationId
+  - String locationName
+  - String locationAddress
+  - String locationCity
+  - int instructorId
+  - String instructorFirstname
+  - String instructorLastname
+  + addParticipant()
+  + removeParticipant()
+  + assignInstructor()
+  + dropInstructor()
+  + isFull()
+  + isEmpty()
+  + hasInstructor()
+  + isAvailable()
+}
+
+class Client {
+}
+
+class Administrator {
+}
+
+class Booking {
+  - int clinetDd <PK>
+  - int offeringId
+  - String clientUsername
+  - String clientFirstname
+  - String clientLastname
+  - String lessonType
+  - String privatePublic
+  - boolean isAvailable
+  - int maxParticipants
+  - int participants
+  - LocalDateTime startTime
+  - LocalDateTime endTime
+  - String locationName
+  - String locationAddress
+  - String instructorFirstname
+  - String instructorLastname
+  + toString()
+}
+
+Account <|-- Instructor
+Account <|-- Client
+Account <|-- Administrator
+
+Organization "1" -- "*" Location : owns
+Location "1" -- "1" Schedule : has
+Schedule "1" -- "*" TimeSlot : includes
+Instructor "*" -- "*" Offering : takes\_on
+Offering "*" -- "1" Location : occurs\_at
+Offering "1" -- "1" TimeSlot : scheduled\_at
+Client "1" -- "*" Booking : makes
+Booking "*" -- "1" Offering : for
+Administrator "1" -- "*" Offering : creates
+Administrator "1" -- "*" Account : can\_delete
+
+@enduml
