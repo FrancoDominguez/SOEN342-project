@@ -1,7 +1,7 @@
 @startuml ClassDiagram#2
 skinparam linetype ortho
 
-title Class Diagram (for Use Case 2)
+title Class Diagram 
 
 class Guest{
   + viewLocations()
@@ -122,11 +122,11 @@ class BookingsCatalogue {
   + toString()
 }
 
-class Assignment{  
+class Assignment <<Set>>{  
 }
 
 
-class Booking { 
+class Booking <<Set>>{ 
 }
 
 
@@ -139,7 +139,7 @@ Guest <|-- Account
 Administrator "1" -- "*" OfferingsCatalogue : "CRUD"
 Administrator "1" -- "*" OrganizationsCatalogue : "CRUD"
 Administrator "1" -- "*" LocationsCatalogue : "CRUD"
-Administrator "1" -- "*" Account : "Read/Delete"
+Administrator "1" - "*" Account : "Read/Delete"
 RegistrationService "1" -- "*" Account : "Create"
 Client "1" -- "1" BookingsCatalogue: "CRUD/has"
 (Client, BookingsCatalogue) .. Booking 
