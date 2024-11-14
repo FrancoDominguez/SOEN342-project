@@ -2,6 +2,7 @@ package lessonbooking.DAO;
 
 import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import lessonbooking.models.Instructor;
 import lessonbooking.services.Mysqlcon;
@@ -13,10 +14,14 @@ public class InstructorsDAO {
   public Instructor fetchByUsername(String username) throws Exception {
     Mysqlcon con = new Mysqlcon();
     con.connect();
-    String queryString = String.format("SELECT * FROM instructors WHERE username = %s", username);
+
+    String queryString = String.format(
+        "SELECT * FROM instructors WHERE username = '%s'", username);
     con.executeQuery(queryString);
     ResultSet rs = con.getResultSet();
-    Instructor newInstructor;
+
+    Instructor instructor = null;
+
     if (rs.next()) {
       int id = rs.getInt("id");
       String firstname = rs.getString("firstname");
@@ -25,18 +30,27 @@ public class InstructorsDAO {
       String password = rs.getString("password");
       LocalDate dateOfBirth = rs.getTimestamp("date_of_birth").toLocalDateTime().toLocalDate();
       String specialization = rs.getString("specialization");
-      newInstructor = new Instructor(id, username, firstname, lastname, phoneNumber, password, dateOfBirth,
-          specialization);
-      return newInstructor;
+
+      String citiesQuery = String.format(
+          "SELECT city FROM instructor_cities WHERE instructor_id = %d", id);
+      con.executeQuery(citiesQuery);
+      ResultSet citiesRs = con.getResultSet();
+
+      ArrayList<String> cities = new ArrayList<>();
+      while (citiesRs.next()) {
+        cities.add(citiesRs.getString("city"));
+      }
+
+      instructor = new Instructor(id, username, firstname, lastname, phoneNumber, password,
+          dateOfBirth, specialization, cities);
     }
-    return null;
+
+    con.close();
+    return instructor;
   }
 
   // create new
   public void insert(Instructor instructor) throws Exception {
-    if (instructor.getId() != -1) {
-      throw new Exception("Cannot insert existing user");
-    }
     Mysqlcon con = new Mysqlcon();
     con.connect();
     String queryString = String.format(
@@ -51,9 +65,6 @@ public class InstructorsDAO {
 
   // update
   public void save(Instructor instructor) throws Exception {
-    if (instructor.getId() == -1) {
-      throw new Exception("Cannot update unexisting user");
-    }
     Mysqlcon con = new Mysqlcon();
     con.connect();
     String queryString = String.format(

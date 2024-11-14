@@ -20,10 +20,10 @@ public class Instructor extends Account {
 
   // account from db
   public Instructor(int id, String username, String firstname, String lastname, String phoneNumber, String password,
-      LocalDate dateOfBirth, String specialization) {
+      LocalDate dateOfBirth, String specialization, ArrayList<String> cities) {
     super(id, username, firstname, lastname, phoneNumber, password, dateOfBirth);
     this.specialization = specialization;
-    this.cities = new ArrayList<String>();
+    this.cities = cities;
     this.offerings = new ArrayList<Offering>();
   }
 
@@ -39,4 +39,11 @@ public class Instructor extends Account {
     return this.cities;
   }
 
+  public Boolean hasCity(String city) {
+    return this.cities.contains(city);
+  }
+
+  public Boolean isSpecializedIn(String specialization) {
+    return (this.specialization.equals(specialization));
+  }
 }

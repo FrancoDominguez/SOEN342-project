@@ -6,7 +6,6 @@ import lessonbooking.models.Organization;
 import lessonbooking.services.Mysqlcon;
 
 public class OrganizationsDAO {
-
   public Organization fetchByName(String name) throws Exception {
     Mysqlcon con = new Mysqlcon();
     con.connect();
@@ -19,9 +18,10 @@ public class OrganizationsDAO {
       newOrganization = new Organization(id, name);
       con.close();
       return newOrganization;
+    } else {
+      con.close();
+      throw new Exception(String.format("Organization '%s' not found", name));
     }
-    con.close();
-    return null;
   }
 
   public Organization fetchById(int id) throws Exception {
@@ -36,9 +36,10 @@ public class OrganizationsDAO {
       newOrganization = new Organization(id, name);
       con.close();
       return newOrganization;
+    } else {
+      con.close();
+      throw new Exception(String.format("Organization with id of '%s' not found", id));
     }
-    con.close();
-    return null;
   }
 
   public void insert(Organization organization) throws Exception {

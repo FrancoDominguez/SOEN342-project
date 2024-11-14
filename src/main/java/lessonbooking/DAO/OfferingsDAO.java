@@ -11,50 +11,130 @@ public class OfferingsDAO {
   public OfferingsDAO() {
   }
 
-  public ArrayList<Offering> fetchByLocationId(int locationId) throws Exception {
-    ArrayList<Offering> offerings = new ArrayList<Offering>();
+  private ArrayList<Offering> fetchOfferings(String queryString) {
+    ArrayList<Offering> offerings = new ArrayList<>();
     Mysqlcon con = new Mysqlcon();
-    con.connect();
+    try {
+      con.connect();
+      con.executeQuery(queryString);
+      ResultSet rs = con.getResultSet();
+      while (rs.next()) {
+        offerings.add(parseResultSet(rs));
+      }
+      con.close();
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+    return offerings;
+  }
+
+  private Offering parseResultSet(ResultSet rs) throws Exception {
+    int offeringId = rs.getInt("offering_id");
+    String lessonType = rs.getString("lesson_type");
+    String privatePublic = rs.getString("private_public");
+    boolean isAvailable = rs.getBoolean("is_available");
+    int maxParticipants = rs.getInt("max_participants");
+    int participants = rs.getInt("participants");
+    LocalDateTime startTime = rs.getTimestamp("start_time") != null
+        ? rs.getTimestamp("start_time").toLocalDateTime()
+        : null;
+    LocalDateTime endTime = rs.getTimestamp("end_time") != null
+        ? rs.getTimestamp("end_time").toLocalDateTime()
+        : null;
+    int locationId = rs.getInt("location_id");
+    String locationName = rs.getString("location_name");
+    String locationAddress = rs.getString("address");
+    String locationCity = rs.getString("city");
+    int instructorId = rs.getInt("instructor_id");
+    String instructorFirstname = rs.getString("instructor_firstname");
+    String instructorLastname = rs.getString("instructor_lastname");
+
+    return new Offering(offeringId, lessonType, privatePublic, isAvailable, maxParticipants, participants,
+        startTime, endTime, locationId, locationName, locationAddress, locationCity,
+        instructorId, instructorFirstname, instructorLastname);
+  }
+
+  public ArrayList<Offering> fetchByLocationId(int locationId) {
     String queryString = String.format(
         "SELECT offerings.id AS offering_id, offerings.lesson_type, offerings.private_public, " +
             "offerings.is_available, offerings.max_participants, offerings.participants, " +
             "offerings.start_time, offerings.end_time, " +
-            "locations.id AS location_id, locations.name AS location_name, locations.address, " +
+            "locations.id AS location_id, locations.name AS location_name, locations.address, locations.city, " +
             "instructors.id AS instructor_id, instructors.firstname AS instructor_firstname, " +
             "instructors.lastname AS instructor_lastname " +
             "FROM offerings " +
             "JOIN locations ON offerings.location_id = locations.id " +
-            "JOIN instructor_offering ON offerings.id = instructor_offering.offering_id " +
-            "JOIN instructors ON instructor_offering.instructor_id = instructors.id " +
+            "JOIN instructor_offerings ON offerings.id = instructor_offerings.offering_id " +
+            "JOIN instructors ON instructor_offerings.instructor_id = instructors.id " +
             "WHERE offerings.location_id = %d;",
         locationId);
-    con.executeQuery(queryString);
-    ResultSet rs = con.getResultSet();
-    while (rs.next()) {
-      int offeringId = rs.getInt("offering_id");
-      String lessonType = rs.getString("lesson_type");
-      String privatePublic = rs.getString("private_public");
-      boolean isAvailable = rs.getBoolean("is_available");
-      int maxParticipants = rs.getInt("max_participants");
-      int participants = rs.getInt("participants");
-      LocalDateTime startTime = rs.getTimestamp("start_time") != null
-          ? rs.getTimestamp("start_time").toLocalDateTime()
-          : null;
-      LocalDateTime endTime = rs.getTimestamp("end_time") != null ? rs.getTimestamp("end_time").toLocalDateTime()
-          : null;
-      String locationName = rs.getString("location_name");
-      String locationAddress = rs.getString("address");
-      int instructorId = rs.getInt("instructor_id");
-      String instructorFirstname = rs.getString("instructor_firstname");
-      String instructorLastname = rs.getString("instructor_lastname");
+    return fetchOfferings(queryString);
+  }
 
-      Offering newOffering = new Offering(offeringId, lessonType, privatePublic, isAvailable, maxParticipants,
-          participants, startTime, endTime, locationId, locationName, locationAddress, instructorId,
-          instructorFirstname, instructorLastname);
-      offerings.add(newOffering);
-    }
-    con.close();
-    return offerings;
+  public ArrayList<Offering> fetchByLessonType(String lessonType) {
+    String queryString = String.format(
+        "SELECT offerings.id AS offering_id, offerings.lesson_type, offerings.private_public, " +
+            "offerings.is_available, offerings.max_participants, offerings.participants, " +
+            "offerings.start_time, offerings.end_time, " +
+            "locations.id AS location_id, locations.name AS location_name, locations.address, locations.city, " +
+            "instructors.id AS instructor_id, instructors.firstname AS instructor_firstname, " +
+            "instructors.lastname AS instructor_lastname " +
+            "FROM offerings " +
+            "JOIN locations ON offerings.location_id = locations.id " +
+            "JOIN instructor_offerings ON offerings.id = instructor_offerings.offering_id " +
+            "JOIN instructors ON instructor_offerings.instructor_id = instructors.id " +
+            "WHERE offerings.lesson_type = '%s';",
+        lessonType);
+    return fetchOfferings(queryString);
+  }
+
+  public ArrayList<Offering> fetchByCity(String city) {
+    String queryString = String.format(
+        "SELECT offerings.id AS offering_id, offerings.lesson_type, offerings.private_public, " +
+            "offerings.is_available, offerings.max_participants, offerings.participants, " +
+            "offerings.start_time, offerings.end_time, " +
+            "locations.id AS location_id, locations.name AS location_name, locations.address, locations.city, " +
+            "instructors.id AS instructor_id, instructors.firstname AS instructor_firstname, " +
+            "instructors.lastname AS instructor_lastname " +
+            "FROM offerings " +
+            "JOIN locations ON offerings.location_id = locations.id " +
+            "JOIN instructor_offerings ON offerings.id = instructor_offerings.offering_id " +
+            "JOIN instructors ON instructor_offerings.instructor_id = instructors.id " +
+            "WHERE locations.city LIKE '%%%s%%';",
+        city);
+    return fetchOfferings(queryString);
+  }
+
+  public ArrayList<Offering> fetchAll() {
+    String queryString = "SELECT offerings.id AS offering_id, offerings.lesson_type, offerings.private_public, " +
+        "offerings.is_available, offerings.max_participants, offerings.participants, " +
+        "offerings.start_time, offerings.end_time, " +
+        "locations.id AS location_id, locations.name AS location_name, locations.address, locations.city, " +
+        "instructors.id AS instructor_id, instructors.firstname AS instructor_firstname, " +
+        "instructors.lastname AS instructor_lastname " +
+        "FROM offerings " +
+        "JOIN locations ON offerings.location_id = locations.id " +
+        "JOIN instructor_offerings ON offerings.id = instructor_offerings.offering_id " +
+        "JOIN instructors ON instructor_offerings.instructor_id = instructors.id;";
+    return fetchOfferings(queryString);
+  }
+
+  public Offering fetchById(int offeringId) {
+    String queryString = String.format(
+        "SELECT offerings.id AS offering_id, offerings.lesson_type, offerings.private_public, " +
+            "offerings.is_available, offerings.max_participants, offerings.participants, " +
+            "offerings.start_time, offerings.end_time, " +
+            "locations.id AS location_id, locations.name AS location_name, locations.address, locations.city, " +
+            "instructors.id AS instructor_id, instructors.firstname AS instructor_firstname, " +
+            "instructors.lastname AS instructor_lastname " +
+            "FROM offerings " +
+            "JOIN locations ON offerings.location_id = locations.id " +
+            "JOIN instructor_offerings ON offerings.id = instructor_offerings.offering_id " +
+            "JOIN instructors ON instructor_offerings.instructor_id = instructors.id " +
+            "WHERE offerings.id = %d;",
+        offeringId);
+    ArrayList<Offering> offerings = fetchOfferings(queryString);
+    return offerings.isEmpty() ? null : offerings.get(0);
   }
 
   public void insert(Offering offering) throws Exception {

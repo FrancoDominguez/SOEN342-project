@@ -14,13 +14,14 @@ public class Offering {
   private int locationId;
   private String locationName;
   private String locationAddress;
+  private String locationCity;
   private int instructorId;
   private String instructorFirstname;
   private String instructorLastname;
 
   public Offering(String lessonType, String privatePublic, int maxParticipants,
       LocalDateTime startTime, LocalDateTime endTime, int locationId, String locationName,
-      String locationAddress) {
+      String locationAddress, String locationCity) {
     this.id = -1;
     this.lessonType = lessonType;
     this.privatePublic = privatePublic;
@@ -32,6 +33,7 @@ public class Offering {
     this.locationId = locationId;
     this.locationName = locationName;
     this.locationAddress = locationAddress;
+    this.locationCity = locationCity;
     this.instructorId = -1;
     this.instructorFirstname = null;
     this.instructorLastname = null;
@@ -39,7 +41,7 @@ public class Offering {
 
   public Offering(int id, String lessonType, String privatePublic, boolean isAvailable, int maxParticipants,
       int participants, LocalDateTime startTime, LocalDateTime endTime, int locationId, String locationName,
-      String locationAddress,
+      String locationAddress, String locationCity,
       int instructorId, String instructorFirstname, String instructorLastname) {
     this.id = id;
     this.lessonType = lessonType;
@@ -52,6 +54,7 @@ public class Offering {
     this.locationId = locationId;
     this.locationName = locationName;
     this.locationAddress = locationAddress;
+    this.locationCity = locationCity;
     this.instructorId = instructorId;
     this.instructorFirstname = instructorFirstname;
     this.instructorLastname = instructorLastname;
@@ -97,6 +100,10 @@ public class Offering {
     return locationAddress;
   }
 
+  public String getLocationCity() {
+    return this.locationCity;
+  }
+
   public int getInstructorId() {
     return this.instructorId;
   }
@@ -109,12 +116,32 @@ public class Offering {
     return instructorLastname;
   }
 
-  public void addParticipants() throws Exception {
+  public void addParticipant() {
+    this.participants++;
+  }
 
+  public void removeParticipant() {
+    this.participants--;
+  }
+
+  public void assignInstructor(Instructor instructor) {
+    this.instructorId = instructor.getId();
+    this.instructorFirstname = instructor.getFirstname();
+    this.instructorLastname = instructor.getLastname();
+  }
+
+  public void dropInstructor() {
+    this.instructorId = -1;
+    this.instructorFirstname = null;
+    this.instructorLastname = null;
   }
 
   public Boolean isFull() {
     return (this.maxParticipants == this.participants);
+  }
+
+  public Boolean isEmpty() {
+    return (this.participants == 0);
   }
 
   public Boolean hasInstructor() {
@@ -123,22 +150,5 @@ public class Offering {
 
   public Boolean isAvailable() {
     return (!this.isFull() && this.hasInstructor());
-  }
-
-  @Override
-  public String toString() {
-    return "Offering{" +
-        ", lessonType='" + lessonType + '\'' +
-        ", privatePublic='" + privatePublic + '\'' +
-        ", isAvailable=" + isAvailable +
-        ", maxParticipants=" + maxParticipants +
-        ", participants=" + participants +
-        ", startTime=" + startTime +
-        ", endTime=" + endTime +
-        ", locationName='" + locationName + '\'' +
-        ", locationAddress='" + locationAddress + '\'' +
-        ", instructorFirstname='" + instructorFirstname + '\'' +
-        ", instructorLastname='" + instructorLastname + '\'' +
-        '}';
   }
 }

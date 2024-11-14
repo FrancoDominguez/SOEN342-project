@@ -8,23 +8,28 @@ import lessonbooking.services.Mysqlcon;
 
 public class LocationsDAO {
 
-  public ArrayList<Location> getById(int id) throws Exception {
+  public ArrayList<Location> getAll() {
     Mysqlcon con = new Mysqlcon();
-    con.connect();
-    String queryString = String.format("SELECT * FROM locations WHERE id = '%d'", id);
-    con.executeQuery(queryString);
-    ResultSet rs = con.getResultSet();
-    ArrayList<Location> newLocations = new ArrayList<Location>();
-    while (rs.next()) {
-      String name = rs.getString("name");
-      String address = rs.getString("address");
-      String city = rs.getString("city");
-      int organizationId = rs.getInt("organization_id");
-      Location newLocation = new Location(id, name, address, city, organizationId);
-      newLocations.add(newLocation);
+    ArrayList<Location> locations = new ArrayList<Location>();
+    try {
+      con.connect();
+      String queryString = String.format("SELECT * FROM locations");
+      con.executeQuery(queryString);
+      ResultSet rs = con.getResultSet();
+      while (rs.next()) {
+        int id = rs.getInt("id");
+        String name = rs.getString("name");
+        String address = rs.getString("address");
+        String city = rs.getString("city");
+        int organizationId = rs.getInt("organization_id");
+        Location location = new Location(id, name, address, city, organizationId);
+        locations.add(location);
+      }
+      con.close();
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
     }
-    con.close();
-    return newLocations;
+    return locations;
   }
 
   public Location getByOrganizationId() {

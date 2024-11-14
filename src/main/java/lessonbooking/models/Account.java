@@ -68,9 +68,13 @@ public abstract class Account {
     return (this.id != -1);
   }
 
-  protected Boolean isOfAge() {
+  public Boolean isAdult() {
     LocalDate currentDate = LocalDate.now();
     Period age = Period.between(this.dateOfBirth, currentDate);
     return age.getYears() >= 18;
+  }
+
+  public Boolean validatePassword(String password) {
+    return (this.password.equals(password));
   }
 }

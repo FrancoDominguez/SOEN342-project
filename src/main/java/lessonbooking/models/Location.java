@@ -24,19 +24,19 @@ public class Location {
   }
 
   public int getId() {
-    return id;
+    return this.id;
   }
 
   public String getName() {
-    return name;
+    return this.name;
   }
 
   public String getAddress() {
-    return address;
+    return this.address;
   }
 
   public String getCity() {
-    return city;
+    return this.city;
   }
 
   public int getOrganizationId() {
