@@ -1,7 +1,6 @@
 package lessonbooking.models;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class Organization {
   private int id;
@@ -14,7 +13,21 @@ public class Organization {
     this.locations = new ArrayList<Location>();
   }
 
-  public void addLocation(Location location) {
-    this.locations.add(location);
+  public Organization(int id, String name) {
+    this.id = id;
+    this.name = name;
+    this.locations = new ArrayList<Location>();
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public ArrayList<Location> getLocations() {
+    return locations;
   }
 }
