@@ -1,50 +1,128 @@
 package lessonbooking.models;
 
-import java.util.ArrayList;
-import java.util.UUID;
+import java.time.LocalDateTime;
 
 public class Booking {
-  
-  private String id;
-  private Offering offering;
-  private String privatePublic;
+  private int clientId;
+  private int offeringId;
+  private String clientUsername;
+  private String clientFirstname;
+  private String clientLastname;
   private String lessonType;
-  private TimeSlot classTime;
-  private ArrayList<Instructor> instructors;
+  private String privatePublic;
+  private boolean isAvailable;
+  private int maxParticipants;
+  private int participants;
+  private LocalDateTime startTime;
+  private LocalDateTime endTime;
+  private String locationName;
+  private String locationAddress;
+  private String instructorFirstname;
+  private String instructorLastname;
 
-  // constructor for new object
-  public Booking(Offering offering) {
-    this.id = UUID.randomUUID().toString();
-    this.offering = offering;
-    this.privatePublic = offering.getprivatePublic();
-    this.lessonType = offering.getLessonType();
-    this.classTime = offering.getClassTime();
-    this.instructors = offering.getInstructors();
+  public Booking(int clientId, int offeringId, String clientUsername, String clientFirstname, String clientLastname,
+      String lessonType, String privatePublic, boolean isAvailable, int maxParticipants, int participants,
+      LocalDateTime startTime, LocalDateTime endTime, String locationName, String locationAddress,
+      String instructorFirstname, String instructorLastname) {
+    this.clientId = clientId;
+    this.offeringId = offeringId;
+    this.clientUsername = clientUsername;
+    this.clientFirstname = clientFirstname;
+    this.clientLastname = clientLastname;
+    this.lessonType = lessonType;
+    this.privatePublic = privatePublic;
+    this.isAvailable = isAvailable;
+    this.maxParticipants = maxParticipants;
+    this.participants = participants;
+    this.startTime = startTime;
+    this.endTime = endTime;
+    this.locationName = locationName;
+    this.locationAddress = locationAddress;
+    this.instructorFirstname = instructorFirstname;
+    this.instructorLastname = instructorLastname;
   }
 
-  // constructor when pulling from the db
-  public Booking(String id, Offering offering) {
-    this.id = id;
-    this.privatePublic = offering.getprivatePublic();
-    this.lessonType = offering.getLessonType();
-    this.classTime = offering.getClassTime();
-    this.instructors = offering.getInstructors();
-    this.offering = offering;
+  public int getClientId() {
+    return clientId;
   }
 
-  public void cancel() {
-    // delete from db and remove reference from client
+  public int getOfferingId() {
+    return offeringId;
+  }
+
+  public String getClientUsername() {
+    return clientUsername;
+  }
+
+  public String getClientFirstname() {
+    return clientFirstname;
+  }
+
+  public String getClientLastname() {
+    return clientLastname;
+  }
+
+  public String getLessonType() {
+    return lessonType;
+  }
+
+  public String getPrivatePublic() {
+    return privatePublic;
+  }
+
+  public boolean isAvailable() {
+    return isAvailable;
+  }
+
+  public int getMaxParticipants() {
+    return maxParticipants;
+  }
+
+  public int getParticipants() {
+    return participants;
+  }
+
+  public LocalDateTime getStartTime() {
+    return startTime;
+  }
+
+  public LocalDateTime getEndTime() {
+    return endTime;
+  }
+
+  public String getLocationName() {
+    return locationName;
+  }
+
+  public String getLocationAddress() {
+    return locationAddress;
+  }
+
+  public String getInstructorFirstname() {
+    return instructorFirstname;
+  }
+
+  public String getInstructorLastname() {
+    return instructorLastname;
   }
 
   @Override
   public String toString() {
     return "Booking{" +
-        "id='" + id + '\'' +
-        ", offering=" + offering +
-        ", privatePublic='" + privatePublic + '\'' +
+        "clientUsername='" + clientUsername + '\'' +
+        ", clientFirstname='" + clientFirstname + '\'' +
+        ", clientLastname='" + clientLastname + '\'' +
         ", lessonType='" + lessonType + '\'' +
-        ", classTime=" + classTime +
-        ", instructors=" + instructors +
+        ", privatePublic='" + privatePublic + '\'' +
+        ", isAvailable=" + isAvailable +
+        ", maxParticipants=" + maxParticipants +
+        ", participants=" + participants +
+        ", startTime=" + startTime +
+        ", endTime=" + endTime +
+        ", locationName='" + locationName + '\'' +
+        ", locationAddress='" + locationAddress + '\'' +
+        ", instructorFirstname='" + instructorFirstname + '\'' +
+        ", instructorLastname='" + instructorLastname + '\'' +
         '}';
   }
 }

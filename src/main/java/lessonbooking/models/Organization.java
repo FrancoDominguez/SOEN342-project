@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class Organization {
-  private String id;
+  private int id;
   private String name;
   private ArrayList<Location> locations;
 
   public Organization(String name) {
-    this.id = UUID.randomUUID().toString();
+    this.id = -1;
     this.name = name;
     this.locations = new ArrayList<Location>();
   }

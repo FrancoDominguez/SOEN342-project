@@ -31,32 +31,48 @@ public class Mysqlcon {
   }
 
   public void close() throws Exception {
-    this.connection.close();
+    if (this.resultSet != null) {
+      this.resultSet.close();
+    }
+    if (this.connection != null) {
+      this.connection.close();
+    }
   }
 
   public Connection getConnection() {
     return this.connection;
   }
 
-
   public void executeQuery(String statementString) throws Exception {
-    Statement statement = this.connection.createStatement();
-    this.resultSet = statement.executeQuery(statementString);
+    Statement statement = null;
+    try {
+      statement = this.connection.createStatement();
+      this.resultSet = statement.executeQuery(statementString);
+    } finally {
+      if (statement != null) {
+        statement.close();
+      }
+    }
   }
 
   public String executeUpdate(String statementString) throws Exception {
-    Statement statement = this.connection.createStatement();
-    int rowsAffected = statement.executeUpdate(statementString);
-    if (rowsAffected > 0) {
-      return "Update successful. Rows affected: " + rowsAffected;
-    } else {
-      return "Update failed.";
+    Statement statement = null;
+    try {
+      statement = this.connection.createStatement();
+      int rowsAffected = statement.executeUpdate(statementString);
+      if (rowsAffected > 0) {
+        return "Update successful. Rows affected: " + rowsAffected;
+      } else {
+        return "Update failed.";
+      }
+    } finally {
+      if (statement != null) {
+        statement.close();
+      }
     }
   }
 
   public ResultSet getResultSet() {
     return this.resultSet;
   }
-
-
 }

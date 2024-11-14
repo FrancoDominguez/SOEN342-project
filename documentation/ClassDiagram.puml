@@ -77,7 +77,6 @@ class Administrator {
   - removeAttendee()
 }
 
-
 class Booking {
   - int id <PK>
   - getBookingInfo()
