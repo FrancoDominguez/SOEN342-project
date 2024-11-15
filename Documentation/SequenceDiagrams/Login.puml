@@ -7,6 +7,7 @@ collections Users as ClientsCatalog
 participant Client as "minor: Client"
 participant Client as "endorser: Client"
 
+<<<<<<< HEAD
 group Booking for Minor
   UserPerson -> Console: minorUsername, offering
   Console -> Server: makeBookingForMinor(minorUsername, offering)
@@ -28,6 +29,33 @@ group Booking for Minor
   else Minor User Not Found
     ClientsCatalog --> Server: null
     Server --> Console: minorNotFoundError
+=======
+group User Logs In
+  UserPerson -> Console: username, password
+  UserPerson -> Console: login()
+  Console -> Server: login(user, password)
+
+  Server -> Accounts: fetchByUsername(username)
+  alt user found
+    Accounts --> Server: u: User
+  else user DNE
+    Accounts --> Server: null
+    Server --> Console: userDoesNotExistError
+    Console --> UserPerson: "Invalid Username"
+  end
+
+  
+  Server -> Accounts: validatePassword(password)
+
+  alt passwordCheck success
+    Accounts --> Server: u : Password
+    Server --> Console: LoginSuccess
+    Console --> UserPerson: "Login Successfull"  
+  else passwordCheck fails
+    Accounts --> Server: passwordError
+    Server --> Console: invalidPasswordError
+    Console --> UserPerson: "Invalid Password"
+>>>>>>> 62481d3600fdd3909881d33150ee4ee0ad4d19d6
   end
 end
 

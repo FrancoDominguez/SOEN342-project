@@ -1,0 +1,80 @@
+@startuml DomainModel#2
+skinparam linetype ortho
+
+title Class Diagram 
+
+class Guest{
+
+}
+
+
+class OrganizationsCatalogue {
+ 
+}
+
+class LocationsCatalogue {
+ 
+}
+
+class Account {
+ 
+}
+
+class Instructor {
+ 
+}
+
+class OfferingsCatalogue {
+ 
+}
+
+class Client {
+  
+}
+
+class Administrator {
+
+}
+
+class RegistrationService{
+
+}
+
+class BookingsCatalogue {
+
+}
+
+class Assignment <<Set>>{  
+}
+
+
+class Booking <<Set>>{ 
+}
+
+
+Account <|-- Instructor
+Account <|-- Client
+Account <|-- Administrator
+Guest <|-- Account
+
+
+Administrator "1" -- "*" OfferingsCatalogue : "CRUD"
+Administrator "1" -- "*" OrganizationsCatalogue : "CRUD"
+Administrator "1" -- "*" LocationsCatalogue : "CRUD"
+Administrator "1" - "*" Account : "Read/Delete"
+RegistrationService "1" -- "*" Account : "Create"
+Client "1" -- "1" BookingsCatalogue: "CRUD/has"
+(Client, BookingsCatalogue) .. Booking 
+Guest "1" -- "*" LocationsCatalogue: "Read"
+Guest "1" -- "*" OfferingsCatalogue: "Read"
+Guest "1" -- "*" OrganizationsCatalogue: "Read"
+LocationsCatalogue "*" - "*" OrganizationsCatalogue: "has"
+BookingsCatalogue "*" - "*" OfferingsCatalogue: "has"
+OfferingsCatalogue "*" - "*" LocationsCatalogue: "has"
+Instructor "1" -- "1" OfferingsCatalogue: "Takes on"
+(Instructor, OfferingsCatalogue) .. Assignment
+
+
+
+
+@enduml

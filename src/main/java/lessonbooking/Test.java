@@ -50,6 +50,8 @@ public class Test {
           LocalDate.parse("1995-07-05"), "swimming", cities4);
       registrationService.registerInstructor("mike_wilson", "Mike", "Wilson", "3333333333", "supersafe",
           LocalDate.parse("1982-03-30"), "yoga", cities5);
+
+      // administrator methods
       AdministratorService admin = new AdministratorService();
       admin.login("FrancoDominguez", "supersafe");
       // delete offerings

@@ -1,0 +1,63 @@
+@startuml
+skinparam linetype ortho
+
+title Domain Model
+
+
+class Guest{
+}
+
+
+class OrganizationsCatalogue {
+ 
+}
+
+class LocationsCatalogue {
+
+}
+
+class Account {
+
+
+}
+
+class Instructor {
+ 
+}
+
+class OfferingsCatalogue {
+}
+
+
+class Administrator {
+
+}
+
+class RegistrationService{
+}
+
+
+
+Account <|-- Instructor
+Account <|-- Administrator
+Guest <|- Account
+
+
+Administrator "1" -- "*" OfferingsCatalogue : "CRUD"
+Administrator "1" -- "*" OrganizationsCatalogue : "CRUD"
+Administrator "1" -- "*" LocationsCatalogue : "CRUD"
+Administrator "1" -- "*" Account : "Read/Delete"
+RegistrationService "1" -- "*" Account : "Create"
+Guest "1" -- "*" LocationsCatalogue: "Read"
+Guest "1" -- "*" OfferingsCatalogue: "Read"
+Guest "1" -- "*" OrganizationsCatalogue: "Read"
+LocationsCatalogue "*" - "*" OrganizationsCatalogue: "has"
+OfferingsCatalogue "*" - "*" LocationsCatalogue: "has"
+Instructor "1" -- "1" OfferingsCatalogue: "Takes on"
+
+
+
+
+@enduml
+
+@enduml
