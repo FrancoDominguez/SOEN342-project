@@ -1,6 +1,7 @@
 package lessonbooking.DAO;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import lessonbooking.models.Organization;
 import lessonbooking.services.Mysqlcon;
@@ -42,11 +43,31 @@ public class OrganizationsDAO {
     }
   }
 
+  public ArrayList<Organization> fetchAll() {
+    ArrayList<Organization> organizations = new ArrayList<Organization>();
+    Mysqlcon con = new Mysqlcon();
+    try {
+      con.connect();
+      String queryString = String.format("SELECT * FROM organizations");
+      con.executeQuery(queryString);
+      ResultSet rs = con.getResultSet();
+      while (rs.next()) {
+        int id = rs.getInt("id");
+        String name = rs.getString("name");
+        Organization organization = new Organization(id, name);
+        organizations.add(organization);
+      }
+      con.close();
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+    return organizations;
+  }
+
   public void insert(Organization organization) throws Exception {
     Mysqlcon con = new Mysqlcon();
     con.connect();
-    String queryString = String.format("INSERT INTO organizations (id, name) VALUES (%d, '%s')", organization.getId(),
-        organization.getName());
+    String queryString = String.format("INSERT INTO organizations (name) VALUES ('%s')", organization.getName());
     con.executeUpdate(queryString);
     con.close();
   }

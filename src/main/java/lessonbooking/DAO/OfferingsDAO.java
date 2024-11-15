@@ -80,9 +80,9 @@ public class OfferingsDAO {
             "instructors.id AS instructor_id, instructors.firstname AS instructor_firstname, " +
             "instructors.lastname AS instructor_lastname " +
             "FROM offerings " +
-            "JOIN locations ON offerings.location_id = locations.id " +
-            "JOIN instructor_offerings ON offerings.id = instructor_offerings.offering_id " +
-            "JOIN instructors ON instructor_offerings.instructor_id = instructors.id " +
+            "LEFT JOIN locations ON offerings.location_id = locations.id " +
+            "LEFT JOIN instructor_offerings ON offerings.id = instructor_offerings.offering_id " +
+            "LEFT JOIN instructors ON instructor_offerings.instructor_id = instructors.id " +
             "WHERE offerings.lesson_type = '%s';",
         lessonType);
     return fetchOfferings(queryString);
@@ -97,9 +97,9 @@ public class OfferingsDAO {
             "instructors.id AS instructor_id, instructors.firstname AS instructor_firstname, " +
             "instructors.lastname AS instructor_lastname " +
             "FROM offerings " +
-            "JOIN locations ON offerings.location_id = locations.id " +
-            "JOIN instructor_offerings ON offerings.id = instructor_offerings.offering_id " +
-            "JOIN instructors ON instructor_offerings.instructor_id = instructors.id " +
+            "LEFT JOIN locations ON offerings.location_id = locations.id " +
+            "LEFT JOIN instructor_offerings ON offerings.id = instructor_offerings.offering_id " +
+            "LEFT JOIN instructors ON instructor_offerings.instructor_id = instructors.id " +
             "WHERE locations.city LIKE '%%%s%%';",
         city);
     return fetchOfferings(queryString);
@@ -113,9 +113,9 @@ public class OfferingsDAO {
         "instructors.id AS instructor_id, instructors.firstname AS instructor_firstname, " +
         "instructors.lastname AS instructor_lastname " +
         "FROM offerings " +
-        "JOIN locations ON offerings.location_id = locations.id " +
-        "JOIN instructor_offerings ON offerings.id = instructor_offerings.offering_id " +
-        "JOIN instructors ON instructor_offerings.instructor_id = instructors.id;";
+        "LEFT JOIN locations ON offerings.location_id = locations.id " +
+        "LEFT JOIN instructor_offerings ON offerings.id = instructor_offerings.offering_id " +
+        "LEFT JOIN instructors ON instructor_offerings.instructor_id = instructors.id;";
     return fetchOfferings(queryString);
   }
 
@@ -128,9 +128,9 @@ public class OfferingsDAO {
             "instructors.id AS instructor_id, instructors.firstname AS instructor_firstname, " +
             "instructors.lastname AS instructor_lastname " +
             "FROM offerings " +
-            "JOIN locations ON offerings.location_id = locations.id " +
-            "JOIN instructor_offerings ON offerings.id = instructor_offerings.offering_id " +
-            "JOIN instructors ON instructor_offerings.instructor_id = instructors.id " +
+            "LEFT JOIN locations ON offerings.location_id = locations.id " +
+            "LEFT JOIN instructor_offerings ON offerings.id = instructor_offerings.offering_id " +
+            "LEFT JOIN instructors ON instructor_offerings.instructor_id = instructors.id " +
             "WHERE offerings.id = %d;",
         offeringId);
     ArrayList<Offering> offerings = fetchOfferings(queryString);
@@ -178,7 +178,7 @@ public class OfferingsDAO {
   public void delete(int offeringId) throws Exception {
     Mysqlcon con = new Mysqlcon();
     con.connect();
-    String queryString = String.format("DELETE FROM offerings WHERE offering_id = %d", offeringId);
+    String queryString = String.format("DELETE FROM offerings WHERE id = %d", offeringId);
     con.executeUpdate(queryString);
     con.close();
   }

@@ -42,4 +42,10 @@ public class Location {
   public int getOrganizationId() {
     return this.organizationid;
   }
+
+  @Override
+  public String toString() {
+    return "id: " + id + ", name: '" + name + "', address: '" + address + "', city: '" + city + "', organizationid: "
+        + organizationid;
+  }
 }

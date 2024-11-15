@@ -25,13 +25,6 @@ group Instructor Creates Offering
   Server -> "o: Offering" **: new Offering(classDetails, TimeSlot)
   Server -> Offerings: push(o)
   Server --> Console: success
-  
-
-
-  
-
-
-
 end
 
 @enduml

@@ -44,15 +44,8 @@ public class Mysqlcon {
   }
 
   public void executeQuery(String statementString) throws Exception {
-    Statement statement = null;
-    try {
-      statement = this.connection.createStatement();
-      this.resultSet = statement.executeQuery(statementString);
-    } finally {
-      if (statement != null) {
-        statement.close();
-      }
-    }
+    Statement statement = this.connection.createStatement();
+    this.resultSet = statement.executeQuery(statementString);
   }
 
   public String executeUpdate(String statementString) throws Exception {

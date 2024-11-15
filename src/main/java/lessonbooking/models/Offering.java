@@ -20,8 +20,7 @@ public class Offering {
   private String instructorLastname;
 
   public Offering(String lessonType, String privatePublic, int maxParticipants,
-      LocalDateTime startTime, LocalDateTime endTime, int locationId, String locationName,
-      String locationAddress, String locationCity) {
+      LocalDateTime startTime, LocalDateTime endTime, Location location) {
     this.id = -1;
     this.lessonType = lessonType;
     this.privatePublic = privatePublic;
@@ -30,10 +29,10 @@ public class Offering {
     this.participants = 0;
     this.startTime = startTime;
     this.endTime = endTime;
-    this.locationId = locationId;
-    this.locationName = locationName;
-    this.locationAddress = locationAddress;
-    this.locationCity = locationCity;
+    this.locationId = location.getId();
+    this.locationName = location.getName();
+    this.locationAddress = location.getAddress();
+    this.locationCity = location.getCity();
     this.instructorId = -1;
     this.instructorFirstname = null;
     this.instructorLastname = null;
@@ -151,4 +150,26 @@ public class Offering {
   public Boolean isAvailable() {
     return (!this.isFull() && this.hasInstructor());
   }
+
+  @Override
+  public String toString() {
+    return "Offering {" +
+        "id=" + id +
+        ", lessonType='" + lessonType + '\'' +
+        ", privatePublic='" + privatePublic + '\'' +
+        ", isAvailable=" + isAvailable +
+        ", maxParticipants=" + maxParticipants +
+        ", participants=" + participants +
+        ", startTime=" + startTime +
+        ", endTime=" + endTime +
+        ", locationId=" + locationId +
+        ", locationName='" + locationName + '\'' +
+        ", locationAddress='" + locationAddress + '\'' +
+        ", locationCity='" + locationCity + '\'' +
+        ", instructorId=" + instructorId +
+        ", instructorFirstname='" + instructorFirstname + '\'' +
+        ", instructorLastname='" + instructorLastname + '\'' +
+        '}';
+  }
+
 }

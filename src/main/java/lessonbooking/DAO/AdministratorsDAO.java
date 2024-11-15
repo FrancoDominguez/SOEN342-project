@@ -13,7 +13,7 @@ public class AdministratorsDAO {
   public Administrator fetchByUsername(String username) throws Exception {
     Mysqlcon con = new Mysqlcon();
     con.connect();
-    String queryString = String.format("SELECT * FROM administrators WHERE username = %s", username);
+    String queryString = String.format("SELECT * FROM administrators WHERE username = '%s'", username);
     con.executeQuery(queryString);
     ResultSet rs = con.getResultSet();
     Administrator newAdministrator;

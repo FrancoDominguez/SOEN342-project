@@ -56,9 +56,7 @@ public class InstructorsDAO {
     String queryString = String.format(
         "INSERT INTO instructors (username, firstname, lastname, phone_number, password, date_of_birth, specialization) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')",
         instructor.getUsername(), instructor.getFirstname(), instructor.getLastname(), instructor.getPhoneNumber(),
-        instructor.getPassword(),
-        instructor.getDateOfBirth().toString());
-
+        instructor.getPassword(), instructor.getDateOfBirth().toString(), instructor.getSpecialization());
     con.executeUpdate(queryString);
     con.close();
   }
@@ -70,8 +68,8 @@ public class InstructorsDAO {
     String queryString = String.format(
         "UPDATE instructors SET username = '%s', firstname = '%s', lastname = '%s', phone_number = '%s', password = '%s', date_of_birth = '%s', specialization = '%s' WHERE id = %d",
         instructor.getUsername(), instructor.getFirstname(), instructor.getLastname(), instructor.getPhoneNumber(),
-        instructor.getPassword(),
-        instructor.getDateOfBirth().toString(), instructor.getId(), instructor.getSpecialization());
+        instructor.getPassword(), instructor.getDateOfBirth().toString(), instructor.getSpecialization(),
+        instructor.getId());
     con.executeUpdate(queryString);
     con.close();
   }

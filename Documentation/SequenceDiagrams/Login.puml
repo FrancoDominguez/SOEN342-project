@@ -1,31 +1,33 @@
-@startuml TakingOffering
+@startuml BookingForMinor
 
 Actor UserPerson as "User"
 participant Console as Console
 participant Server as Server
-collections Users as Accounts
-participant User as "u: User"
+collections Users as ClientsCatalog
+participant Client as "minor: Client"
+participant Client as "endorser: Client"
 
-
-
-group User Logs In
-  UserPerson -> Console: email, password
-  UserPerson -> Console: login()
-  Console -> Server: login(email, password)
-  Server -> Accounts: findUser(email)
-  alt user found
-    Accounts --> Server: u: User
-  else user DNE
-    Accounts --> Server: null
-    Server --> Console: userDoesNotExistError
-  end
-  Server -> User: getPassword()
-  User --> Server: accountPassword
-  Server -> Server: compare(password, accountPassword)
-  alt password matches
-    Server --> Console: sessionToken
-  else wrong password
-    Server --> Console: wrongPasswordError
+group Booking for Minor
+  UserPerson -> Console: minorUsername, offering
+  Console -> Server: makeBookingForMinor(minorUsername, offering)
+  Server -> ClientsCatalog: fetchByUsername(minorUsername)
+  alt Minor User Found
+    ClientsCatalog --> Server: minor: Client
+    Server -> Server: isAdult() on endorser
+    alt Endorser Not Adult
+      Server --> Console: Exception: "Endorser must be an adult"
+    else Endorser is Adult
+      Server -> Server: isAdult() on minor
+      alt Minor is Adult
+        Server --> Console: Exception: "Adults must handle their own bookings"
+      else Minor is Not Adult
+        Server -> Server: performBooking(minor, offering)
+        Server --> Console: bookingSuccessful
+      end
+    end
+  else Minor User Not Found
+    ClientsCatalog --> Server: null
+    Server --> Console: minorNotFoundError
   end
 end
 

@@ -14,6 +14,7 @@ import lessonbooking.models.Booking;
 import lessonbooking.models.Client;
 import lessonbooking.models.Location;
 import lessonbooking.models.Offering;
+import lessonbooking.models.Organization;
 
 public class AdministratorService extends GuestService {
   private Administrator admin;
@@ -22,8 +23,16 @@ public class AdministratorService extends GuestService {
   private ClientsDAO clientsCatalog;
   private InstructorsDAO instructorsCatalog;
   private InstructorOfferingsDAO instructorOfferingsCatalog;
-  private OrganizationsDAO organizationsCatalog;
 
+  public AdministratorService() {
+    this.bookingsCatalog = new BookingsDAO();
+    this.administratorsCatalog = new AdministratorsDAO();
+    this.clientsCatalog = new ClientsDAO();
+    this.instructorsCatalog = new InstructorsDAO();
+    this.instructorOfferingsCatalog = new InstructorOfferingsDAO();
+  }
+
+  // tested
   public void login(String username, String password) throws Exception {
     Administrator admin = administratorsCatalog.fetchByUsername(username);
     if (admin == null) {
@@ -35,13 +44,13 @@ public class AdministratorService extends GuestService {
     }
   }
 
+  // tested
   public void createOffering(String lessonType, String privatePublic, int maxParticipants,
-      LocalDateTime startTime, LocalDateTime endTime, int locationId, String locationName,
-      String locationAddress, String locationCity) {
+      LocalDateTime startTime, LocalDateTime endTime, Location location) {
 
     Offering newOffering = new Offering(
         lessonType, privatePublic, maxParticipants, startTime, endTime,
-        locationId, locationName, locationAddress, locationCity);
+        location);
     try {
       this.offeringsCatalog.insert(newOffering);
     } catch (Exception e) {
@@ -70,9 +79,19 @@ public class AdministratorService extends GuestService {
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
-
   }
 
+  // tested
+  public void createOrganization(String name) {
+    Organization org = new Organization(name);
+    try {
+      organizationsCatalog.insert(org);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+  }
+
+  // tested
   public void createLocation(String name, String address, String city, int organizationId) {
     Location newLocation = new Location(name, address, city, organizationId);
     try {
