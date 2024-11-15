@@ -1,0 +1,35 @@
+@startuml createOffering
+
+title createOffering() Sequence Diagram
+
+@startuml createOffering
+
+title createOffering() Sequence Diagram
+
+Actor UserPerson as "Admin"
+participant Console as Console
+participant Server as "Server"
+collections Offerings as OfferingsCatalog
+participant Offering as "newOffering: Offering"
+
+UserPerson -> Console: lessonType, privatePublic, maxParticipants, startTime, endTime, locationId, locationName, locationAddress, locationCity
+UserPerson -> Console: createOffering()
+
+Console -> Server: createOffering(lessonType, privatePublic, maxParticipants, startTime, endTime, locationId, locationName, locationAddress, locationCity)
+Server -> Offering: create(lessonType, privatePublic, maxParticipants, startTime, endTime, locationId, locationName, locationAddress, locationCity)
+
+  alt success
+    Server -> Offerings: insert(newOffering)
+    Offerings --> Server: insertSuccess
+    Server --> Console: successMessage
+    Console --> UserPerson: "Offering created successfully"
+  else error occurs
+    Server --> Console: errorMessage
+    Console --> UserPerson: "ERROR! Offering was not created."
+ 
+end
+
+@enduml
+
+
+

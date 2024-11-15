@@ -1,0 +1,32 @@
+@startuml performBooking
+
+title performBooking() Sequence Diagram
+
+Actor Client as "Client"
+participant Console as Console
+participant Server as "Server"
+participant Offering as "Offering"
+collections Offerings as OfferingsCatalog
+collections Bookings as BookingsCatalog
+participant Booking as "Booking"
+
+Client -> Console: requestToPerformBooking(offering)
+Console -> Server: performBooking(clientGettingBooked, offering)
+Server -> Offering: isAvailable()
+alt offering is unavailable
+    Offering --> Server: false
+    Server -> Console: "ERROR: Offering is unavailable"
+    Console --> Client: "ERROR: Offering is unavailable"
+else offering is available
+    Offering --> Server: true
+    Server -> Offering: addParticipant()
+    Offering --> Server: participantAdded
+    Server -> OfferingsCatalog: save(offering)
+    OfferingsCatalog --> Server: saveSuccess
+    Server -> BookingsCatalog: insert(clientGettingBooked.getId(), offering.getId())
+    BookingsCatalog --> Server: insertSuccess
+    Server --> Console: successMessage
+    Console --> Client: "Booking successful"
+end
+
+@enduml
