@@ -1,0 +1,28 @@
+@startuml makeBooking
+
+title makeBooking() Sequence Diagram
+
+Actor Client as "Client"
+participant Console as Console
+participant Server as "Server"
+participant Offering as "Offering"
+participant ClientCheck as "Client Check"
+participant Booking as "Booking"
+
+Client -> Console: offering
+Client -> Console: makeBooking(offering)
+Console -> Server: makeBooking(offering)
+Server -> ClientCheck: isAdult(client)
+alt client is not an adult
+    ClientCheck --> Server: false
+    Server -> Console: "ERROR: Minors need an endorser"
+    Console --> Client: "Minors need an endorser to handle their bookings"
+else client is adult
+    ClientCheck --> Server: true
+    Server -> Booking: performBooking(client, offering)
+    Booking --> Server: bookingSuccess
+    Server --> Console: successMessage
+    Console --> Client: "Booking successful"
+end
+
+@enduml

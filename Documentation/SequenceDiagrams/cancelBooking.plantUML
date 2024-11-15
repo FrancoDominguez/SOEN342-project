@@ -1,0 +1,32 @@
+@startuml cancelBooking
+
+title cancelBooking() Sequence Diagram
+
+Actor Client as "Client"
+participant Console as Console
+participant Server as "Server"
+participant Booking as "Booking"
+participant Offering as "Offering"
+collections Offerings as OfferingsCatalog
+collections Bookings as BookingsCatalog
+
+Client -> Console: cancelBooking(booking)
+Console -> Server: cancelBooking(booking)
+Server -> OfferingsCatalog: fetchById(booking.getOfferingId())
+alt offering found
+    OfferingsCatalog --> Server: offering
+    Server -> Offering: removeParticipant()
+    Offering --> Server: participantRemoved
+    Server -> OfferingsCatalog: save(offering)
+    OfferingsCatalog --> Server: saveSuccess
+    Server -> BookingsCatalog: delete(booking)
+    BookingsCatalog --> Server: deleteSuccess
+    Server --> Console: "Booking canceled successfully"
+    Console --> Client: "Booking canceled successfully"
+else offering not found
+    OfferingsCatalog --> Server: null
+    Server --> Console: "ERROR: Offering not found"
+    Console --> Client: "ERROR: Offering not found"
+end
+
+@enduml
