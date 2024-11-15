@@ -1,4 +1,6 @@
-@startuml TakingOffering
+@startuml Login
+
+title login() Sequence Diagram
 
 Actor UserPerson as "User"
 participant Console as Console

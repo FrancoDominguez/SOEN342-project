@@ -1,0 +1,34 @@
+@startuml DeleteAccount
+
+title deleteAccount() Sequence Diagram
+
+Actor UserPerson as "Administrator"
+participant Console as Console
+participant Server as Server
+participant DB as "Database"
+collections Users as Accounts
+participant User as "u: User"
+
+group User Deletes Account
+  UserPerson -> Console: username
+  UserPerson -> Console: deleteAccount()
+  Console -> Server: deleteAccount(username)
+
+  Server -> DB: fetchByUsername(username)
+  alt user found
+    Accounts --> Server: u: User
+    Server -> DB: deleteUserData(u :user)
+    DB --> Server: SuccessfullDeletion
+    Server --> Console: Successfulldeletion
+    Console --> UserPerson: "Account deleted succesfully"
+  else user DNE
+    Accounts --> Server: null
+    Server --> Console: userDoesNotExistError
+    Console --> UserPerson: "Invalid Username"
+  end
+
+  
+
+end
+
+@enduml
