@@ -1,0 +1,28 @@
+@startuml viewOffering
+
+title viewOffering() Sequence Diagram
+
+
+Actor GuestUser as "Guest User"
+participant Console as Console
+participant Server as Server
+collections Offerings as offeringsCatalog
+participant Offering as "offering: Offering"
+
+
+  GuestUser -> Console: "requestToViewAllOfferings"
+  Console -> Server: viewAllOfferings()
+  group Guest Views All Offerings
+  Server -> OfferingsCatalog: offeringsCatalog.fetchAll()
+  OfferingsCatalog --> Server: listOfOfferings
+  Server -> Console: listOfOfferings
+  Console --> GuestUser: displayOfferings(listOfOfferings)
+  else No Offerings Available
+  Server -> OfferingsCatalog: offeringsCatalog.fetchAll()
+  OfferingsCatalog --> Server: "OfferingsCatalog empty"
+  Server --> Console: NoAvailableOfferingsError
+  Console --> GuestUser: "There are no available offerings at the moment..."
+  
+end
+
+@enduml
