@@ -1,4 +1,5 @@
 @startuml CreatingOffering
+
 Actor Admin as Admin
 participant Console as Console
 participant Server as Server
