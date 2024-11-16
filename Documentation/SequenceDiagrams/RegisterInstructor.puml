@@ -1,0 +1,32 @@
+@startuml RegisterInstructor
+
+title registerInstructor() Sequence Diagram
+
+Actor UserPerson as "Instructor"
+participant Console as Console
+participant Server as Server
+collections Instructor as Accounts
+participant User as "newInstructor: Instructor"
+
+group User Registration
+  UserPerson -> Console: username, firstname, email, phoneNumber, password, dateOfBirth, specialization, cities
+  UserPerson -> Console: registerInstructor()
+
+  Console -> Server: registerInstructor(username, firstname, email, phoneNumber, password, dateOfBirth, specialization, cities)
+  Server -> Accounts: findUser(email)
+
+  alt user exists
+    Accounts --> Server: userAlreadyExistsError
+    Server --> Console: userAlreadyExistsError
+  else user does not exist
+    Accounts --> Server: null
+    Server -> User: create(username, firstname, email, phoneNumber, password, dateOfBirth, specialization, cities)
+    User --> Server: newInstructor
+    Server -> Accounts: insert(newUser)
+    Accounts --> Server: registrationSuccess
+    Server --> Console: registrationSuccess
+    Console --> UserPerson: "Registration was successfull"
+  end
+end
+
+@enduml

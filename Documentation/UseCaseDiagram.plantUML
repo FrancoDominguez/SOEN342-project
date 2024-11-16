@@ -1,0 +1,49 @@
+@startuml useCaseDiagram
+
+title System Use Case Diagram
+
+
+left to right direction
+
+actor GuestUser as "Guest User"
+actor Admin as "Admin"
+actor Client as "Client"
+actor Instructor as "Instructor"
+
+
+rectangle "System" {
+  usecase "View All Offerings" as UC1
+  usecase "Manage Offerings" as UC2
+  usecase "Login" as UC3
+  usecase "Make Booking" as UC4
+  usecase "Cancel Booking" as UC5
+  usecase "View Bookings" as UC6
+  usecase "Make Booking for Minor" as UC7
+  usecase "Read/Delete Accounts" as UC8
+  usecase "View Organizations" as UC9
+  usecase "Register (as Client or Instructor)" as UC10
+  usecase "Update Availability" as UC11
+  usecase "Accept Offering" as UC12
+  usecase "Set Availability" as UC13
+}
+
+GuestUser --> UC1
+GuestUser --> UC9
+GuestUser --> UC10
+
+Admin --> UC2
+Admin --> UC8
+Admin --> UC3
+
+Client --> UC3
+Client --> UC4
+Client --> UC5
+Client --> UC6
+Client --> UC7
+
+Instructor --> UC11
+Instructor --> UC12
+Instructor --> UC13
+
+
+@enduml

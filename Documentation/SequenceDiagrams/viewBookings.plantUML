@@ -1,0 +1,27 @@
+@startuml viewBookings
+
+title viewBookings() Sequence Diagram
+
+Actor Client as "Client"
+participant Console as Console
+participant Server as "Server"
+collections Bookings as BookingsCatalog
+participant Booking as "Booking"
+
+Client -> Console: requestToViewBookings()
+Client -> Console: viewBookings()
+Console -> Server: viewBookings()
+
+alt Bookings Not Found
+    Server -> BookingsCatalog: fetchByClientId(client.getId())
+    BookingsCatalog --> Server: listOfBookings
+    Server --> Console: ERROR: No Bookings
+    Console --> Client: displayBookings(listOfBookings)
+else Bookings Found
+    Server -> BookingsCatalog: fetchByClientId(client.getId())
+    BookingsCatalog --> Server: listOfBookings
+    Server --> Console: listOfBookings
+    Console --> Client: *Display a list of all the client's bookings*
+end
+
+@enduml

@@ -1,4 +1,4 @@
-@startuml BookingForMinor
+@startuml TakingOffering
 
 Actor UserPerson as "User"
 participant Console as Console

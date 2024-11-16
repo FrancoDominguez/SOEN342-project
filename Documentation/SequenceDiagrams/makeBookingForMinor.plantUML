@@ -1,0 +1,40 @@
+@startuml makeBookingForMinor
+
+title makeBookingForMinor() Sequence Diagram
+
+Actor Client as "Client"
+participant Console as Console
+participant Server as "Server"
+participant ClientCheck as "Client Check"
+collections Clients as ClientsCatalog
+participant Offering as "Offering"
+participant Minor as "Minor"
+participant Booking as "Booking"
+
+Client -> Console: minorUsername, offering
+Client -> Console: makeBookingForMinor(minorUsername, offering)
+Console -> Server: makeBookingForMinor(minorUsername, offering)
+Server -> ClientsCatalog: fetchByUsername(minorUsername)
+ClientsCatalog --> Server: minor
+Server -> ClientCheck: isAdult(client)
+alt client is not an adult
+    ClientCheck --> Server: false
+    Server -> Console: "Endorser must be an adult"
+    Console --> Client: "ERROR: Endorser must be an adult"
+else client is adult
+    ClientCheck --> Server: true
+    Server -> Minor: isAdult()
+    alt minor is adult
+        Minor --> Server: true
+        Server -> Console: "Adults must handle their own bookings"
+        Console --> Client: "ERROR: Adults must handle their own bookings"
+    else minor is not adult
+        Minor --> Server: false
+        Server -> Booking: performBooking(minor, offering)
+        Booking --> Server: bookingSuccess
+        Server --> Console: successMessage
+        Console --> Client: "Booking for minor successful"
+    end
+end
+
+@enduml
