@@ -6,6 +6,10 @@ import java.util.Random;
 public class Utils {
 
   public static void printArray(String title, ArrayList<?> arrayList) {
+    if (arrayList.size() == 0) {
+      System.out.println(title.toUpperCase() + ": NO ENTRIES FOUND");
+      return;
+    }
     StringBuilder result = new StringBuilder();
     result.append("    " + title.toUpperCase() + ":\n\n");
     int index = 0;

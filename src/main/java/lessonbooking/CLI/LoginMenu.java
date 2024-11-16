@@ -8,14 +8,14 @@ import java.util.Scanner;
 public class LoginMenu {
   public void startMenu() {
     Scanner scanner = new Scanner(System.in);
-    boolean running = true;
+    boolean backToMainMenu = false;
 
-    while (running) {
+    while (!backToMainMenu) {
       System.out.println("\n\nWelcome to Lesson Booking System");
       System.out.println("1. Client Login");
       System.out.println("2. Instructor Login");
       System.out.println("3. Administrator Login");
-      System.out.println("4. Exit");
+      System.out.println("4. Back to Main Menu");
       System.out.print("Enter your choice: ");
 
       int choice = scanner.nextInt();
@@ -63,7 +63,7 @@ public class LoginMenu {
             String password = scanner.nextLine();
             adminService.login(username, password);
 
-            AdministratorMenu adminMenu = new AdministratorMenu(adminService);
+            AdminMenu adminMenu = new AdminMenu(adminService);
             adminMenu.startMenu();
           } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
@@ -71,15 +71,13 @@ public class LoginMenu {
           break;
 
         case 4:
-          running = false;
-          System.out.println("Exiting the system. Goodbye!");
+          backToMainMenu = true;
+          System.out.println("Returning to Main Menu...");
           break;
 
         default:
           System.out.println("Invalid choice. Please try again.");
       }
     }
-
-    scanner.close();
   }
 }

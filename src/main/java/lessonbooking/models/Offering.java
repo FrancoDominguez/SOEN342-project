@@ -26,7 +26,7 @@ public class Offering {
     this.lessonType = lessonType;
     this.privatePublic = privatePublic;
     this.isAvailable = false;
-    this.maxParticipants = maxParticipants;
+    this.maxParticipants = (privatePublic.equals("private") ? 1 : maxParticipants);
     this.participants = 0;
     this.startTime = startTime;
     this.endTime = endTime;

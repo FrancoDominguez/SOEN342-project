@@ -38,4 +38,15 @@ public class Instructor extends Account {
   public Boolean isSpecializedIn(String specialization) {
     return (this.specialization.equals(specialization));
   }
+
+  @Override
+  public String toString() {
+    return "Instructor Info: " +
+        "Name: " + firstname + " " + lastname + ", " +
+        "Username: " + username + ", " +
+        "Phone: " + phoneNumber + ", " +
+        "Date of Birth: " + dateOfBirth + ", " +
+        "Specialization: " + specialization + ", " +
+        "Cities: " + String.join(", ", cities);
+  }
 }

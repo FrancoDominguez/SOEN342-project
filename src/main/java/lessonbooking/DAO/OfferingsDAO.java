@@ -137,6 +137,23 @@ public class OfferingsDAO {
     return offerings.isEmpty() ? null : offerings.get(0);
   }
 
+  public ArrayList<Offering> fetchByInstructorId(int instructorId) {
+    String queryString = String.format(
+        "SELECT offerings.id AS offering_id, offerings.lesson_type, offerings.private_public, " +
+            "offerings.is_available, offerings.max_participants, offerings.participants, " +
+            "offerings.start_time, offerings.end_time, " +
+            "locations.id AS location_id, locations.name AS location_name, locations.address, locations.city, " +
+            "instructors.id AS instructor_id, instructors.firstname AS instructor_firstname, " +
+            "instructors.lastname AS instructor_lastname " +
+            "FROM offerings " +
+            "LEFT JOIN locations ON offerings.location_id = locations.id " +
+            "LEFT JOIN instructor_offerings ON offerings.id = instructor_offerings.offering_id " +
+            "LEFT JOIN instructors ON instructor_offerings.instructor_id = instructors.id " +
+            "WHERE instructors.id = %d;",
+        instructorId);
+    return fetchOfferings(queryString);
+  }
+
   public void insert(Offering offering) throws Exception {
     Mysqlcon con = new Mysqlcon();
     con.connect();

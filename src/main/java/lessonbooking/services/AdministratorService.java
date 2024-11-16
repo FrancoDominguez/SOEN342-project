@@ -8,7 +8,6 @@ import lessonbooking.DAO.BookingsDAO;
 import lessonbooking.DAO.ClientsDAO;
 import lessonbooking.DAO.InstructorOfferingsDAO;
 import lessonbooking.DAO.InstructorsDAO;
-import lessonbooking.DAO.OrganizationsDAO;
 import lessonbooking.models.Administrator;
 import lessonbooking.models.Booking;
 import lessonbooking.models.Client;
@@ -47,11 +46,17 @@ public class AdministratorService extends GuestService {
 
   // tested
   public void createOffering(String lessonType, String privatePublic, int maxParticipants,
-      LocalDateTime startTime, LocalDateTime endTime, Location location) {
+      LocalDateTime startTime, LocalDateTime endTime, Location location) throws Exception {
 
     Offering newOffering = new Offering(
         lessonType, privatePublic, maxParticipants, startTime, endTime,
         location);
+    ArrayList<Offering> locationOfferings = this.offeringsCatalog.fetchByLocationId(location.getId());
+    for (int i = 0; i < locationOfferings.size(); i++) {
+      if (locationOfferings.get(i).getStartTime().equals(newOffering.getStartTime())) {
+        throw new Exception("Time conflict with another offering");
+      }
+    }
     try {
       this.offeringsCatalog.insert(newOffering);
     } catch (Exception e) {
@@ -70,7 +75,7 @@ public class AdministratorService extends GuestService {
     }
   }
 
-  public void deleteOfferingForce(Offering offering, Boolean force) {
+  public void deleteOfferingForce(Offering offering) {
     try {
       if (offering.hasInstructor()) {
         this.instructorOfferingsCatalog.delete(offering.getId());
@@ -135,5 +140,9 @@ public class AdministratorService extends GuestService {
 
   public void deleteBooking(Booking booking) throws Exception {
     this.bookingsCatalog.delete(booking);
+  }
+
+  public Administrator accessInfo() {
+    return this.admin;
   }
 }

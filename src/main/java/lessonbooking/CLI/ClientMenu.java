@@ -3,6 +3,7 @@ package lessonbooking.CLI;
 import lessonbooking.models.Booking;
 import lessonbooking.models.Location;
 import lessonbooking.models.Offering;
+import lessonbooking.models.Client;
 import lessonbooking.services.ClientService;
 import static lessonbooking.utils.Utils.printArray;
 
@@ -18,10 +19,11 @@ public class ClientMenu {
 
   public void startMenu() {
     Scanner scanner = new Scanner(System.in);
+    boolean running = true;
     int choice;
 
-    while (true) {
-      System.out.println("\nClient Menu:");
+    while (running) {
+      System.out.println("\n\nClient Menu:");
       System.out.println("1. View Bookings");
       System.out.println("2. Make Booking");
       System.out.println("3. Make Booking for Minor");
@@ -29,8 +31,9 @@ public class ClientMenu {
       System.out.println("5. View Offerings by Location");
       System.out.println("6. View Offerings by Lesson Type");
       System.out.println("7. View Offerings by City");
-      System.out.println("8. View All Offerings");
-      System.out.println("9. Exit");
+      System.out.println("8. View all Available Offerings");
+      System.out.println("9. View Client Info");
+      System.out.println("10. Go Back");
 
       System.out.print("Enter your choice: ");
       choice = Integer.parseInt(scanner.nextLine());
@@ -42,8 +45,8 @@ public class ClientMenu {
             printArray("Bookings", bookings);
             break;
           case 2:
-            System.out.println("Choose Offering View Method:");
-            System.out.println("1. View All Offerings");
+            System.out.println("\nChoose Offering View Method:");
+            System.out.println("1. View all Available Offerings");
             System.out.println("2. View Offerings by Location");
             System.out.println("3. View Offerings by Lesson Type");
             System.out.println("4. View Offerings by City");
@@ -85,8 +88,8 @@ public class ClientMenu {
             break;
 
           case 3:
-            System.out.println("Choose Offering View Method:");
-            System.out.println("1. View All Offerings");
+            System.out.println("\nChoose Offering View Method:");
+            System.out.println("1. View all Available Offerings");
             System.out.println("2. View Offerings by Location");
             System.out.println("3. View Offerings by Lesson Type");
             System.out.println("4. View Offerings by City");
@@ -161,15 +164,32 @@ public class ClientMenu {
             printArray("All Offerings", allOfferingsList);
             break;
           case 9:
-            System.out.println("Exiting menu. Goodbye!");
-            scanner.close();
-            return;
+            viewClientInfo();
+            break;
+          case 10:
+            System.out.println("Returning to previous menu.");
+            running = false;
+            break;
           default:
             System.out.println("Invalid choice. Please try again.");
         }
       } catch (Exception e) {
         System.out.println("Error: " + e.getMessage());
       }
+    }
+  }
+
+  private void viewClientInfo() {
+    try {
+      Client client = clientService.accessInfo();
+      if (client == null) {
+        System.out.println("No client data available.");
+      } else {
+        System.out.println("Client Info:");
+        System.out.println(client.toString());
+      }
+    } catch (Exception e) {
+      System.out.println("Error: " + e.getMessage());
     }
   }
 }

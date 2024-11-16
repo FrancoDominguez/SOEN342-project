@@ -58,6 +58,11 @@ public class InstructorService extends GuestService {
     }
   }
 
+  public ArrayList<Offering> viewAssignedOfferings() {
+    ArrayList<Offering> offerings = offeringsCatalog.fetchByInstructorId(this.instructor.getId());
+    return offerings;
+  }
+
   // tested
   public ArrayList<Offering> viewAvailableOfferings() {
     ArrayList<Offering> offerings = this.viewAllOfferings();

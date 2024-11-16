@@ -6,6 +6,7 @@ import lessonbooking.DAO.BookingsDAO;
 import lessonbooking.DAO.ClientsDAO;
 import lessonbooking.models.Booking;
 import lessonbooking.models.Client;
+import lessonbooking.models.Instructor;
 import lessonbooking.models.Location;
 import lessonbooking.models.Offering;
 import lessonbooking.models.Organization;
@@ -97,6 +98,10 @@ public class ClientService extends GuestService {
       }
     }
     return filteredOfferings;
+  }
+
+  public Client accessInfo() {
+    return this.client;
   }
 
   public ArrayList<Offering> viewOfferingsByLocation(Location location) {

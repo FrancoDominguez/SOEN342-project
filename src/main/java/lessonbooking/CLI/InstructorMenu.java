@@ -3,6 +3,7 @@ package lessonbooking.CLI;
 import lessonbooking.services.InstructorService;
 import lessonbooking.models.Instructor;
 import lessonbooking.models.Offering;
+import static lessonbooking.utils.Utils.printArray;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -11,7 +12,7 @@ public class InstructorMenu {
   private InstructorService instructorService;
 
   public InstructorMenu(InstructorService instructorService) {
-    this.instructorService = new InstructorService();
+    this.instructorService = instructorService;
   }
 
   public void startMenu() {
@@ -23,8 +24,9 @@ public class InstructorMenu {
       System.out.println("1. Take Offering");
       System.out.println("2. Drop Offering");
       System.out.println("3. View Available Offerings");
-      System.out.println("4. View Instructor Info");
-      System.out.println("5. Back to Previous Menu");
+      System.out.println("4. View Assigned Offerings"); // New option
+      System.out.println("5. View Instructor Info");
+      System.out.println("6. Back to Previous Menu");
       System.out.print("Enter your choice: ");
       int choice = scanner.nextInt();
       scanner.nextLine();
@@ -40,9 +42,12 @@ public class InstructorMenu {
           viewAvailableOfferings();
           break;
         case 4:
-          viewInstructorInfo();
+          viewAssignedOfferings(); // New case
           break;
         case 5:
+          viewInstructorInfo();
+          break;
+        case 6:
           exit = true;
           System.out.println("Returning to previous menu...");
           break;
@@ -54,13 +59,12 @@ public class InstructorMenu {
 
   private void takeOffering(Scanner scanner) {
     try {
-      System.out.println("Take Offering:");
       ArrayList<Offering> availableOfferings = instructorService.viewAvailableOfferings();
       if (availableOfferings.isEmpty()) {
         System.out.println("No available offerings to take.");
         return;
       }
-      printArray(availableOfferings);
+      printArray("Available Offerings", availableOfferings);
       System.out.print("Enter the ID of the offering to take: ");
       int offeringId = scanner.nextInt();
       scanner.nextLine(); // Consume newline
@@ -81,17 +85,17 @@ public class InstructorMenu {
   private void dropOffering(Scanner scanner) {
     try {
       System.out.println("Drop Offering:");
-      ArrayList<Offering> currentOfferings = instructorService.viewOfferingsByLessonType("All");
-      if (currentOfferings.isEmpty()) {
-        System.out.println("No offerings to drop.");
+      ArrayList<Offering> assignedOfferings = instructorService.viewAssignedOfferings(); // Use new function
+      if (assignedOfferings.isEmpty()) {
+        System.out.println("No assigned offerings to drop.");
         return;
       }
-      printArray(currentOfferings);
+      printArray("Assigned Offerings", assignedOfferings);
       System.out.print("Enter the ID of the offering to drop: ");
       int offeringId = scanner.nextInt();
       scanner.nextLine(); // Consume newline
 
-      Offering selectedOffering = findOfferingById(currentOfferings, offeringId);
+      Offering selectedOffering = findOfferingById(assignedOfferings, offeringId);
       if (selectedOffering == null) {
         System.out.println("Offering not found.");
         return;
@@ -108,7 +112,20 @@ public class InstructorMenu {
     try {
       System.out.println("Available Offerings:");
       ArrayList<Offering> availableOfferings = instructorService.viewAvailableOfferings();
-      printArray(availableOfferings);
+      printArray("Available Offerings", availableOfferings);
+    } catch (Exception e) {
+      System.out.println("Error: " + e.getMessage());
+    }
+  }
+
+  private void viewAssignedOfferings() {
+    try {
+      ArrayList<Offering> assignedOfferings = instructorService.viewAssignedOfferings(); // Call new function
+      if (assignedOfferings.isEmpty()) {
+        System.out.println("No assigned offerings found.");
+      } else {
+        printArray("Assigned Offerings", assignedOfferings);
+      }
     } catch (Exception e) {
       System.out.println("Error: " + e.getMessage());
     }
@@ -135,15 +152,5 @@ public class InstructorMenu {
       }
     }
     return null;
-  }
-
-  private <T> void printArray(ArrayList<T> arraylist) {
-    if (arraylist.isEmpty()) {
-      System.out.println("No items to display.");
-    } else {
-      for (T item : arraylist) {
-        System.out.println(item.toString());
-      }
-    }
   }
 }
