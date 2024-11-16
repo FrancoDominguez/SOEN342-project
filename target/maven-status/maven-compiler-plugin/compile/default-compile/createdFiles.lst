@@ -22,10 +22,12 @@ lessonbooking/DAO/BookingsDAO.class
 lessonbooking/models/Location.class
 lessonbooking/services/ClientService.class
 lessonbooking/CLI/MainMenu.class
+lessonbooking/CLI/AdministratorMenu.class
 lessonbooking/DAO/LocationsDAO.class
 lessonbooking/models/Schedule.class
 lessonbooking/DAO/OrganizationsDAO.class
 lessonbooking/DAO/OfferingsDAO.class
 lessonbooking/services/InstructorService.class
 lessonbooking/DAO/AdministratorsDAO.class
+lessonbooking/CLI/ClientMenu.class
 lessonbooking/models/Offering.class

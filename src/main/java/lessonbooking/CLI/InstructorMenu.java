@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class InstructorMenu {
   private InstructorService instructorService;
 
-  public InstructorMenu() {
+  public InstructorMenu(InstructorService instructorService) {
     this.instructorService = new InstructorService();
   }
 
@@ -19,53 +19,36 @@ public class InstructorMenu {
     boolean exit = false;
 
     while (!exit) {
-      System.out.println("Instructor Menu:");
-      System.out.println("1. Login");
-      System.out.println("2. Take Offering");
-      System.out.println("3. Drop Offering");
-      System.out.println("4. View Available Offerings");
-      System.out.println("5. View Instructor Info");
-      System.out.println("6. Back to Previous Menu");
+      System.out.println("\n\nInstructor Menu:");
+      System.out.println("1. Take Offering");
+      System.out.println("2. Drop Offering");
+      System.out.println("3. View Available Offerings");
+      System.out.println("4. View Instructor Info");
+      System.out.println("5. Back to Previous Menu");
       System.out.print("Enter your choice: ");
       int choice = scanner.nextInt();
       scanner.nextLine();
 
       switch (choice) {
         case 1:
-          login(scanner);
-          break;
-        case 2:
           takeOffering(scanner);
           break;
-        case 3:
+        case 2:
           dropOffering(scanner);
           break;
-        case 4:
+        case 3:
           viewAvailableOfferings();
           break;
-        case 5:
+        case 4:
           viewInstructorInfo();
           break;
-        case 6:
+        case 5:
           exit = true;
           System.out.println("Returning to previous menu...");
           break;
         default:
           System.out.println("Invalid choice. Try again.");
       }
-    }
-  }
-
-  private void login(Scanner scanner) {
-    try {
-      System.out.print("Enter username: ");
-      String username = scanner.nextLine();
-      System.out.print("Enter password: ");
-      String password = scanner.nextLine();
-      instructorService.login(username, password);
-      System.out.println("Login successful.");
-    } catch (Exception e) {
-      System.out.println("Error: " + e.getMessage());
     }
   }
 
@@ -135,7 +118,7 @@ public class InstructorMenu {
     try {
       Instructor instructor = instructorService.accessInfo();
       if (instructor == null) {
-        System.out.println("No instructor logged in.");
+        System.out.println("No instructor data available.");
       } else {
         System.out.println("Instructor Info:");
         System.out.println(instructor.toString());

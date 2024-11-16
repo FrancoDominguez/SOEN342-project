@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import lessonbooking.DAO.InstructorOfferingsDAO;
 import lessonbooking.DAO.InstructorsDAO;
 import lessonbooking.models.Instructor;
-import lessonbooking.models.Location;
 import lessonbooking.models.Offering;
-import lessonbooking.models.Organization;
 
 public class InstructorService extends GuestService {
   private Instructor instructor;
