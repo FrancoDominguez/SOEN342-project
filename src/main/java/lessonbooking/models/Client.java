@@ -22,5 +22,4 @@ public class Client extends Account {
         "Phone: " + phoneNumber + ", " +
         "Date of Birth: " + dateOfBirth;
   }
-
 }

@@ -18,7 +18,7 @@ public class RegistrationMenu {
     boolean exit = false;
 
     while (!exit) {
-      System.out.println("Registration Menu:");
+      System.out.println("\n\nRegistration Menu:");
       System.out.println("1. Register Client");
       System.out.println("2. Register Instructor");
       System.out.println("3. Register Administrator");
