@@ -23,11 +23,18 @@ package "models" {
 
 package "services" {
     class AdminastrorService
-    class ClientService
     class GuestService
     class InstructorService
     class Mysqlcon
     class RegistrationService
+}
+
+package "CLI" {
+  class InstructorMenu
+  class LoginMenu
+  class MainMenu
+  class RegistrationMenu
+  class AdminMenu
 }
 
 class Driver
@@ -35,5 +42,6 @@ class Driver
 Driver -> DAO
 Driver --> models
 Driver --> services
+Driver -> CLI
 
 @enduml
