@@ -34,10 +34,26 @@ package "services" {
     class RegistrationService
 }
 
+package "CLI" {
+  class InstructorMenu
+  class LoginMenu
+  class MainMenu
+  class RegistrationMenu
+  class AdminMenu
+  class ClientMenu
+}
+
+package "utils"{
+  class Utils
+}
+
 class Driver
 
 Driver -> DAO
 Driver --> models
-Driver -> services
+Driver --> services
+Driver -> CLI
+Driver --> utils
+
 
 @enduml
