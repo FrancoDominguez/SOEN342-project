@@ -20,9 +20,36 @@ public class GuestService {
     this.organizationsCatalog = new OrganizationsDAO();
   }
 
+  private ArrayList<Offering> filter(ArrayList<Offering> offerings) {
+    if (this instanceof ClientService) {
+      ArrayList<Offering> filteredOfferings = new ArrayList<Offering>();
+      for (int i = 0; i < offerings.size(); i++) {
+        Offering offering = offerings.get(i);
+        if (offering.isAvailable()) {
+          filteredOfferings.add(offering);
+        }
+      }
+      return filteredOfferings;
+    } else {
+      return offerings;
+    }
+  }
+
   // tested
   public ArrayList<Location> viewLocations() {
     return this.locationsCatalog.getAll();
+  }
+
+  public ArrayList<Offering> viewEmptyOfferings() {
+    ArrayList<Offering> offerings = this.offeringsCatalog.fetchAll();
+    ArrayList<Offering> filteredOfferings = new ArrayList<Offering>();
+    for (int i = 0; i < offerings.size(); i++) {
+      Offering offering = offerings.get(i);
+      if (offering.isEmpty()) {
+        filteredOfferings.add(offering);
+      }
+    }
+    return filteredOfferings;
   }
 
   //

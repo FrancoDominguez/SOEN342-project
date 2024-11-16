@@ -108,21 +108,13 @@ public class Booking {
 
   @Override
   public String toString() {
-    return "Booking{" +
-        "clientUsername='" + clientUsername + '\'' +
-        ", clientFirstname='" + clientFirstname + '\'' +
-        ", clientLastname='" + clientLastname + '\'' +
-        ", lessonType='" + lessonType + '\'' +
-        ", privatePublic='" + privatePublic + '\'' +
-        ", isAvailable=" + isAvailable +
-        ", maxParticipants=" + maxParticipants +
-        ", participants=" + participants +
-        ", startTime=" + startTime +
-        ", endTime=" + endTime +
-        ", locationName='" + locationName + '\'' +
-        ", locationAddress='" + locationAddress + '\'' +
-        ", instructorFirstname='" + instructorFirstname + '\'' +
-        ", instructorLastname='" + instructorLastname + '\'' +
-        '}';
+    return "Client (ID: " + this.clientId + "): " + this.clientFirstname + " " + this.clientLastname +
+        ", Offering ID: " + this.offeringId +
+        ", Type: " + this.lessonType +
+        ", Privacy: " + this.privatePublic +
+        ", Participants: " + this.participants + "/" + this.maxParticipants +
+        ", Time: " + this.startTime + " to " + this.endTime +
+        ", Location: " + this.locationName + " (" + this.locationAddress + ")" +
+        ", Instructor: " + this.instructorFirstname + " " + this.instructorLastname;
   }
 }

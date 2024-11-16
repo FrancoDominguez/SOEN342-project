@@ -12,6 +12,7 @@ import lessonbooking.DAO.OrganizationsDAO;
 import lessonbooking.models.Administrator;
 import lessonbooking.models.Booking;
 import lessonbooking.models.Client;
+import lessonbooking.models.Instructor;
 import lessonbooking.models.Location;
 import lessonbooking.models.Offering;
 import lessonbooking.models.Organization;
@@ -101,8 +102,31 @@ public class AdministratorService extends GuestService {
     }
   }
 
-  public void deleteAccount(String username, String accountType) {
-    // interfacing needed to implement this
+  public void deleteAccount(String username, String accountType) throws Exception {
+    if (accountType.equalsIgnoreCase("client")) {
+      Client client = clientsCatalog.fetchByUsername(username);
+      if (client != null) {
+        clientsCatalog.delete(client.getId());
+      } else {
+        throw new Exception("Client account not found.");
+      }
+    } else if (accountType.equalsIgnoreCase("administrator")) {
+      Administrator admin = administratorsCatalog.fetchByUsername(username);
+      if (admin != null) {
+        administratorsCatalog.delete(admin.getId());
+      } else {
+        throw new Exception("Administrator account not found.");
+      }
+    } else if (accountType.equalsIgnoreCase("instructor")) {
+      Instructor instructor = instructorsCatalog.fetchByUsername(username);
+      if (instructor != null) {
+        instructorsCatalog.delete(instructor.getId());
+      } else {
+        throw new Exception("Instructor account not found.");
+      }
+    } else {
+      throw new Exception("Invalid account type specified.");
+    }
   }
 
   public ArrayList<Booking> viewOfferingBookings(Offering offering) {

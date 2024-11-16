@@ -5,7 +5,6 @@ lessonbooking/DAO/InstructorsDAO.class
 lessonbooking/services/Mysqlcon.class
 lessonbooking/DAO/InstructorOfferingsDAO.class
 lessonbooking/models/Booking.class
-lessonbooking/utils/PrintArray.class
 lessonbooking/services/GuestService.class
 lessonbooking/models/Administrator.class
 lessonbooking/CLI/RegistrationMenu.class
@@ -16,15 +15,17 @@ lessonbooking/services/AdministratorService.class
 lessonbooking/CLI/LoginMenu.class
 lessonbooking/models/Account.class
 lessonbooking/models/Organization.class
+lessonbooking/utils/Utils.class
+lessonbooking/CLI/InstructorMenu.class
 lessonbooking/Test.class
 lessonbooking/DAO/BookingsDAO.class
 lessonbooking/models/Location.class
 lessonbooking/services/ClientService.class
+lessonbooking/CLI/MainMenu.class
 lessonbooking/DAO/LocationsDAO.class
 lessonbooking/models/Schedule.class
 lessonbooking/DAO/OrganizationsDAO.class
 lessonbooking/DAO/OfferingsDAO.class
 lessonbooking/services/InstructorService.class
 lessonbooking/DAO/AdministratorsDAO.class
-lessonbooking/CLI/GuestMenu.class
 lessonbooking/models/Offering.class

@@ -1,6 +1,6 @@
 package lessonbooking;
 
-import lessonbooking.CLI.GuestMenu;
+import lessonbooking.CLI.MainMenu;
 
 public class Driver {
   public static void main(String[] args) throws Exception {

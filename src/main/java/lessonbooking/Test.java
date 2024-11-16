@@ -1,11 +1,14 @@
 package lessonbooking;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static lessonbooking.utils.PrintArray.printArray;
+import static lessonbooking.utils.Utils.printArray;
+import static lessonbooking.utils.Utils.random;
 
+import lessonbooking.models.Booking;
 import lessonbooking.models.Location;
 import lessonbooking.models.Offering;
 import lessonbooking.models.Organization;
@@ -21,51 +24,60 @@ public class Test {
   }
 
   public void runTest() {
-    GuestService guestService = new GuestService();
-    RegistrationService registrationService = new RegistrationService();
-    ClientService clientService = new ClientService();
-    AdministratorService adminService = new AdministratorService();
-
-    // Resources
-    ArrayList<Offering> offerings = guestService.viewAllOfferings();
-    ArrayList<Organization> organizations = guestService.viewOrganizations();
-    ArrayList<Location> locations = guestService.viewLocations();
 
     try {
-      ArrayList<String> cities1 = new ArrayList<>(List.of("Montreal", "Toronto"));
-      ArrayList<String> cities2 = new ArrayList<>(List.of("Montreal", "Pointe Claire"));
-      ArrayList<String> cities3 = new ArrayList<>(List.of("Montreal", "Pierrefonds"));
-      ArrayList<String> cities4 = new ArrayList<>(List.of("Montreal", "Beaconsfield", "Pierrefonds"));
-      ArrayList<String> cities5 = new ArrayList<>(List.of("Toronto"));
-
-      InstructorService instructorService = new InstructorService();
-      System.out.println("creating instructors");
-      registrationService.registerInstructor("john_doe", "John", "Doe", "1234567890", "supersafe",
-          LocalDate.parse("1985-05-10"), "swimming", cities1);
-      registrationService.registerInstructor("jane_smith", "Jane", "Smith", "0987654321", "supersafe",
-          LocalDate.parse("1990-08-20"), "yoga", cities2);
-      registrationService.registerInstructor("alex_jones", "Alex", "Jones", "5555555555", "supersafe",
-          LocalDate.parse("1988-12-15"), "karate", cities3);
-      registrationService.registerInstructor("emily_clark", "Emily", "Clark", "4444444444", "supersafe",
-          LocalDate.parse("1995-07-05"), "swimming", cities4);
-      registrationService.registerInstructor("mike_wilson", "Mike", "Wilson", "3333333333", "supersafe",
-          LocalDate.parse("1982-03-30"), "yoga", cities5);
-
-      // administrator methods
+      ClientService client = new ClientService();
       AdministratorService admin = new AdministratorService();
+      InstructorService instructor = new InstructorService();
+      RegistrationService registrator = new RegistrationService();
+
+      // misc methods
+      // registrator.registerClient("ClientToBeDeleted", "Firstname", "Lastname",
+      // "1231231234", "supersafe",
+      // LocalDate.parse("1990-01-01"));
+      // registrator.registerClient("MinorClient", "Firstname", "Lastname",
+      // "1231231234", "supersafe",
+      // LocalDate.parse("2010-01-01"));
+
+      GuestService guest = new GuestService();
+      ArrayList<Location> allLocations = guest.viewLocations();
+      ArrayList<Organization> allOrganizations = guest.viewOrganizations();
+
+      // Administrator methods
       admin.login("FrancoDominguez", "supersafe");
+      admin.createOffering("karate", "public", 20, LocalDateTime.of(2024, 11, 20, 10, 0),
+          LocalDateTime.of(2024, 11, 20, 12, 0), new GuestService().viewLocations().get(random(allLocations.size())));
+      admin.createOffering("karate", "public", 20, LocalDateTime.of(2024, 11, 20, 10, 0),
+          LocalDateTime.of(2024, 11, 20, 12, 0), new GuestService().viewLocations().get(random(allLocations.size())));
+
+      printArray("list of empty offerings", admin.viewEmptyOfferings());
+      admin.deleteOffering(admin.viewEmptyOfferings().get(0));
+      printArray("list of empty offerings after deletion", admin.viewEmptyOfferings());
+
+      admin.deleteAccount("ClientToBeDeleted", "client");
+
       // delete offerings
       // delete offerings --force
       // view offering bookings
       // delete booking
       // delete account
 
-      ClientService client = new ClientService();
+      instructor.login("JohnathanDoe", "password");
+      ArrayList<Offering> availableOfferings = instructor.viewAvailableOfferings();
+      instructor.takeOffering(availableOfferings.get(random(availableOfferings.size())));
+
+      // Client methods
       client.login("JohnDoe", "supersafe");
-      // view bookings
-      // make booking
+      ArrayList<Offering> clientOfferings = client.viewAllOfferings();
+      printArray("client's available offerings", clientOfferings);
+      client.makeBooking(clientOfferings.get(0));
+      ArrayList<Booking> bookings = client.viewBookings();
+      printArray("client's bookings after making a booking", bookings);
+      client.cancelBooking(bookings.get(0));
+      bookings = client.viewBookings();
+      printArray("client's bookings after canceling that booking", bookings);
+
       // make booking for minor
-      // cancel booking
 
     } catch (Exception e) {
       System.out.println(e.getMessage());

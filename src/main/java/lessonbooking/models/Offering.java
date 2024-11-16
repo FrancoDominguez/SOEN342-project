@@ -18,6 +18,7 @@ public class Offering {
   private int instructorId;
   private String instructorFirstname;
   private String instructorLastname;
+  private Boolean availableForClient;
 
   public Offering(String lessonType, String privatePublic, int maxParticipants,
       LocalDateTime startTime, LocalDateTime endTime, Location location) {
@@ -144,32 +145,34 @@ public class Offering {
   }
 
   public Boolean hasInstructor() {
-    return (this.instructorId != -1);
+    return (this.instructorId > 0);
   }
 
   public Boolean isAvailable() {
     return (!this.isFull() && this.hasInstructor());
   }
 
-  @Override
-  public String toString() {
-    return "Offering {" +
-        "id=" + id +
-        ", lessonType='" + lessonType + '\'' +
-        ", privatePublic='" + privatePublic + '\'' +
-        ", isAvailable=" + isAvailable +
-        ", maxParticipants=" + maxParticipants +
-        ", participants=" + participants +
-        ", startTime=" + startTime +
-        ", endTime=" + endTime +
-        ", locationId=" + locationId +
-        ", locationName='" + locationName + '\'' +
-        ", locationAddress='" + locationAddress + '\'' +
-        ", locationCity='" + locationCity + '\'' +
-        ", instructorId=" + instructorId +
-        ", instructorFirstname='" + instructorFirstname + '\'' +
-        ", instructorLastname='" + instructorLastname + '\'' +
-        '}';
+  public void setAvailableForClient(Boolean bool) {
+    this.availableForClient = bool;
   }
 
+  @Override
+  public String toString() {
+    Boolean availability;
+    if (this.availableForClient == null) {
+      availability = isAvailable() ? true : false;
+    } else {
+      availability = this.availableForClient ? (isAvailable() ? true : false) : false;
+    }
+
+    return "ID: " + id + ", " +
+        (availability ? "Available" : "Unavailable") +
+        ", Type: " + lessonType +
+        ", Privacy: " + privatePublic +
+        ", Max Participants: " + maxParticipants +
+        ", Current Participants: " + participants +
+        ", Time: " + startTime + " to " + endTime +
+        ", Location: " + locationName + " (" + locationAddress + ", " + locationCity + ")" +
+        ", Instructor: " + instructorFirstname + " " + instructorLastname + " (ID: " + instructorId + ")";
+  }
 }
